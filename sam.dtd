@@ -255,6 +255,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | fn
   | fnn
   | fnp
+  | folio
   | fs
   | glo
   | glof
@@ -267,6 +268,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | inf
   | inh
   | inh1
+  | inhn
   | lo
   | lps
   | lt
@@ -361,7 +363,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | rb
   | rbc
   | rbi
-  | rc
   | rf
   | rf1
   | rf2
@@ -551,13 +552,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | structure
   | sts
   | tatr
-  | taxclass
-  | taxfamily
-  | taxgenus
-  | taxkingdom
-  | taxorder
-  | taxphylum
-  | taxspecies
   | tch
   | tch1
   | tch2
@@ -662,7 +656,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | ccust3
   | cemd
   | chemb
-  | cip-i
   | code
   | code-b
   | code-bi
@@ -686,7 +679,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | fnnum
   | fnref
   | fol
-  | folio
   | frac
   | frac-b
   | frac-bi
@@ -711,7 +703,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | i
   | idx
   | img
-  | inhn
   | iu
   | l-chi
   | l-chi-b
@@ -761,6 +752,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | osf-i
   | page
   | pnum
+  | rc
   | red
   | red-b
   | red-i
@@ -804,6 +796,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | symb-sup-b
   | symb-sup-bi
   | symb-sup-i
+  | taxclass
+  | taxfamily
+  | taxgenus
+  | taxkingdom
+  | taxorder
+  | taxphylum
+  | taxspecies
   | tel
   | tetr
   | tetr-b
@@ -1974,6 +1973,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
+  <!ELEMENT folio ( %inline_level.group; )* >
+  <!ATTLIST folio
+    %coreattrs;
+  >
+  
   <!ELEMENT fs ( %inline_level.group; )* >
   <!ATTLIST fs
     %coreattrs;
@@ -2031,6 +2035,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT inh1 ( %inline_level.group; )* >
   <!ATTLIST inh1
+    %coreattrs;
+  >
+  
+  <!ELEMENT inhn ( %inline_level.group; )* >
+  <!ATTLIST inhn
     %coreattrs;
   >
   
@@ -2501,11 +2510,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT rbi ( %inline_level.group; )* >
   <!ATTLIST rbi
-    %coreattrs;
-  >
-  
-  <!ELEMENT rc ( %inline_level.group; )* >
-  <!ATTLIST rc
     %coreattrs;
   >
   
@@ -3454,41 +3458,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
-  <!ELEMENT taxclass ( %inline_level.group; )* >
-  <!ATTLIST taxclass
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxfamily ( %inline_level.group; )* >
-  <!ATTLIST taxfamily
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxgenus ( %inline_level.group; )* >
-  <!ATTLIST taxgenus
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxkingdom ( %inline_level.group; )* >
-  <!ATTLIST taxkingdom
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxorder ( %inline_level.group; )* >
-  <!ATTLIST taxorder
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxphylum ( %inline_level.group; )* >
-  <!ATTLIST taxphylum
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxspecies ( %inline_level.group; )* >
-  <!ATTLIST taxspecies
-    %coreattrs;
-  >
-  
   <!ELEMENT tch ( %inline_level.group; )* >
   <!ATTLIST tch
     %coreattrs;
@@ -4000,11 +3969,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
-  <!ELEMENT cip-i ( #PCDATA )* >
-  <!ATTLIST cip-i
-    %coreattrs;
-  >
-  
   <!ELEMENT code ( #PCDATA )* >
   <!ATTLIST code
     %coreattrs;
@@ -4120,11 +4084,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
-  <!ELEMENT folio ( #PCDATA )* >
-  <!ATTLIST folio
-    %coreattrs;
-  >
-  
   <!ELEMENT frac ( #PCDATA )* >
   <!ATTLIST frac
     %coreattrs;
@@ -4237,11 +4196,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT idx ( #PCDATA )* >
   <!ATTLIST idx
-    %coreattrs;
-  >
-  
-  <!ELEMENT inhn ( #PCDATA )* >
-  <!ATTLIST inhn
     %coreattrs;
   >
   
@@ -4490,6 +4444,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
+  <!ELEMENT rc ( #PCDATA )* >
+  <!ATTLIST rc
+    %coreattrs;
+  >
+  
   <!ELEMENT red ( #PCDATA )* >
   <!ATTLIST red
     %coreattrs;
@@ -4702,6 +4661,41 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT symb-sup-i ( #PCDATA )* >
   <!ATTLIST symb-sup-i
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxclass ( #PCDATA )* >
+  <!ATTLIST taxclass
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxfamily ( #PCDATA )* >
+  <!ATTLIST taxfamily
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxgenus ( #PCDATA )* >
+  <!ATTLIST taxgenus
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxkingdom ( #PCDATA )* >
+  <!ATTLIST taxkingdom
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxorder ( #PCDATA )* >
+  <!ATTLIST taxorder
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxphylum ( #PCDATA )* >
+  <!ATTLIST taxphylum
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxspecies ( #PCDATA )* >
+  <!ATTLIST taxspecies
     %coreattrs;
   >
   

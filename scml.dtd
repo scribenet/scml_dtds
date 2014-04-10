@@ -293,6 +293,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | fn
   | fnn
   | fnp
+  | folio
   | fs
   | glo
   | glof
@@ -305,6 +306,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | inf
   | inh
   | inh1
+  | inhn
   | lo
   | lps
   | lt
@@ -399,7 +401,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | rb
   | rbc
   | rbi
-  | rc
   | rf
   | rf1
   | rf2
@@ -588,13 +589,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | stl
   | sts
   | tatr
-  | taxclass
-  | taxfamily
-  | taxgenus
-  | taxkingdom
-  | taxorder
-  | taxphylum
-  | taxspecies
   | tch
   | tch1
   | tch2
@@ -689,17 +683,18 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
 <!ENTITY % inline_level.group
   "#PCDATA
+  | a
   | abbr
   | ac
   | b
   | bcv
   | bi
+  | br
   | ccust1
   | ccust2
   | ccust3
   | cemd
   | chemb
-  | cip-i
   | code
   | code-b
   | code-bi
@@ -722,8 +717,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | first-i
   | fnnum
   | fnref
-  | fol
-  | folio
   | frac
   | frac-b
   | frac-bi
@@ -748,7 +741,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | i
   | idx
   | img
-  | inhn
   | iu
   | l-chi
   | l-chi-b
@@ -796,6 +788,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | osf-b
   | osf-bi
   | osf-i
+  | page
   | pnum
   | red
   | red-b
@@ -804,11 +797,9 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | red-sm
   | red-sm-i
   | red-sm-ob
+  | rc
   | rh
-  | rh-i
   | rhr
-  | rhref
-  | rhref1
   | rhv
   | sm
   | sm-b
@@ -840,6 +831,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | symb-sup-b
   | symb-sup-bi
   | symb-sup-i
+  | taxclass
+  | taxfamily
+  | taxgenus
+  | taxkingdom
+  | taxorder
+  | taxphylum
+  | taxspecies
   | tel
   | tetr
   | tetr-b
@@ -2154,6 +2152,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
+  <!ELEMENT folio ( %inline_level.group; )* >
+  <!ATTLIST folio
+    %coreattrs;
+  >
+  
   <!ELEMENT fs ( %inline_level.group; )* >
   <!ATTLIST fs
     %coreattrs;
@@ -2211,6 +2214,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT inh1 ( %inline_level.group; )* >
   <!ATTLIST inh1
+    %coreattrs;
+  >
+  
+  <!ELEMENT inhn ( %inline_level.group; )* >
+  <!ATTLIST inhn
     %coreattrs;
   >
   
@@ -2681,11 +2689,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT rbi ( %inline_level.group; )* >
   <!ATTLIST rbi
-    %coreattrs;
-  >
-  
-  <!ELEMENT rc ( %inline_level.group; )* >
-  <!ATTLIST rc
     %coreattrs;
   >
   
@@ -3629,41 +3632,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
-  <!ELEMENT taxclass ( %inline_level.group; )* >
-  <!ATTLIST taxclass
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxfamily ( %inline_level.group; )* >
-  <!ATTLIST taxfamily
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxgenus ( %inline_level.group; )* >
-  <!ATTLIST taxgenus
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxkingdom ( %inline_level.group; )* >
-  <!ATTLIST taxkingdom
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxorder ( %inline_level.group; )* >
-  <!ATTLIST taxorder
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxphylum ( %inline_level.group; )* >
-  <!ATTLIST taxphylum
-    %coreattrs;
-  >
-  
-  <!ELEMENT taxspecies ( %inline_level.group; )* >
-  <!ATTLIST taxspecies
-    %coreattrs;
-  >
-  
   <!ELEMENT tch ( %inline_level.group; )* >
   <!ATTLIST tch
     %coreattrs;
@@ -4175,11 +4143,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
-  <!ELEMENT cip-i ( %inline_level.group; )* >
-  <!ATTLIST cip-i
-    %coreattrs;
-  >
-  
   <!ELEMENT code ( %inline_level.group; )* >
   <!ATTLIST code
     %coreattrs;
@@ -4290,16 +4253,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ATTLIST fnref
     %coreattrs;
     idref  IDREF  #IMPLIED
-  >
-  
-  <!ELEMENT fol ( %inline_level.group; )* >
-  <!ATTLIST fol
-    %coreattrs;
-  >
-  
-  <!ELEMENT folio ( %inline_level.group; )* >
-  <!ATTLIST folio
-    %coreattrs;
   >
   
   <!ELEMENT frac ( %inline_level.group; )* >
@@ -4417,11 +4370,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT idx ( %inline_level.group; )* >
   <!ATTLIST idx
-    %coreattrs;
-  >
-  
-  <!ELEMENT inhn ( %inline_level.group; )* >
-  <!ATTLIST inhn
     %coreattrs;
   >
   
@@ -4705,6 +4653,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
+  <!ELEMENT rc ( %inline_level.group; )* >
+  <!ATTLIST rc
+    %coreattrs;
+  >
+  
   <!ELEMENT red ( %inline_level.group; )* >
   <!ATTLIST red
     %coreattrs;
@@ -4745,23 +4698,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
   
-  <!ELEMENT rh-i ( %inline_level.group; )* >
-  <!ATTLIST rh-i
-    %coreattrs;
-  >
-  
   <!ELEMENT rhr ( %inline_level.group; )* >
   <!ATTLIST rhr
-    %coreattrs;
-  >
-  
-  <!ELEMENT rhref ( %inline_level.group; )* >
-  <!ATTLIST rhref
-    %coreattrs;
-  >
-  
-  <!ELEMENT rhref1 ( %inline_level.group; )* >
-  <!ATTLIST rhref1
     %coreattrs;
   >
   
@@ -4917,6 +4855,41 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   
   <!ELEMENT symb-sup-i ( %inline_level.group; )* >
   <!ATTLIST symb-sup-i
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxclass ( %inline_level.group; )* >
+  <!ATTLIST taxclass
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxfamily ( %inline_level.group; )* >
+  <!ATTLIST taxfamily
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxgenus ( %inline_level.group; )* >
+  <!ATTLIST taxgenus
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxkingdom ( %inline_level.group; )* >
+  <!ATTLIST taxkingdom
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxorder ( %inline_level.group; )* >
+  <!ATTLIST taxorder
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxphylum ( %inline_level.group; )* >
+  <!ATTLIST taxphylum
+    %coreattrs;
+  >
+  
+  <!ELEMENT taxspecies ( %inline_level.group; )* >
+  <!ATTLIST taxspecies
     %coreattrs;
   >
   
