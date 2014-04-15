@@ -836,7 +836,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 <!--                   Main-Level Elements                         -->
 <!-- ============================================================= -->
 
-  <!ELEMENT sam (%paragraph_level.group;)+ >
+  <!ELEMENT sam (%paragraph_level.group; | table )+ >
   <!ATTLIST sam
       %coreattrs;
       bver CDATA #IMPLIED

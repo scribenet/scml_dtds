@@ -36,6 +36,19 @@ class DTDTests < MiniTest::Unit::TestCase
     assert is_valid 
   end
 
+  def test_sam_with_table
+@input = """
+<sam>
+<p>stuff</p>
+<table>
+<tr><cell><td>stuff</td></cell></tr>
+</table>
+</sam>
+"""
+    setup_and_exercise 'sam'
+    assert is_valid 
+  end
+
   def test_invalid_sam
 @input = """
 <sam>
