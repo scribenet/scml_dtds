@@ -17,7 +17,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
          and the root. Only paragraph-level
          elements and tables are valid
          children of the root.
-59       Fix to cell validation rules      dcorrigan     2.0.2  140515
 -->
 
 <!-- ============================================================ -->

@@ -31,7 +31,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 58       Addition of some minor attributes dcorrigan     2.0.1  140509
          to url, page, and table
          Fixed placement of hr
-59       Fix to cell validation rules      dcorrigan     2.0.2  140515
 -->
 
 <!-- ============================================================ -->
