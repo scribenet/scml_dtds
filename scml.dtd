@@ -28,9 +28,10 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
            valid within all block-levels
          - various minor additions and
            deletions
-58       Addition of some minor attributes dcorrign     2.0.1  140509
+58       Addition of some minor attributes dcorrigan     2.0.1  140509
          to url, page, and table
          Fixed placement of hr
+59       Fix to cell validation rules      dcorrigan     2.0.2  140515
 -->
 
 <!-- ============================================================ -->
@@ -1040,7 +1041,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     valign  CDATA  #IMPLIED
   >
 
-  <!ELEMENT cell (%block_styles; | %paragraph_styles;)+ >
+  <!ELEMENT cell (%block_styles; | %paragraph_styles;)* >
   <!ATTLIST cell
     %coreattrs;
     colspan  CDATA  #IMPLIED

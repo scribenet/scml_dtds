@@ -17,19 +17,20 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
          and the root. Only paragraph-level
          elements and tables are valid
          children of the root.
+59       Fix to cell validation rules      dcorrigan     2.0.2  140515
 -->
 
-<!-- ============================================================= -->
-<!--                   Entity Declarations                         -->
-<!-- ============================================================= -->
+<!-- ============================================================ -->
+<!--                     Entity Declarations                      -->
+<!-- ============================================================ -->
 
   <!ENTITY % coreattrs
-   "id        ID      #IMPLIED
+    "id        ID      #IMPLIED
     type      CDATA   #IMPLIED
     semantic  CDATA   #IMPLIED"
   >
 
-<!ENTITY % paragraph_level.group
+  <!ENTITY % paragraph_styles
   "ah
   | ahaft
   | ans
@@ -101,6 +102,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | bx1nlf
   | bx1nll
   | bx1nlp
+  | bx1s
   | bx1sl
   | bx1slf
   | bx1sll
@@ -253,9 +255,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | figh1
   | fign
   | fn
-  | fnn
   | fnp
-  | folio
   | fs
   | glo
   | glof
@@ -285,9 +285,9 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | ltsig
   | ltsigf
   | ltsigl
-  | mediaatr
-  | mediacap
   | mediah
+  | mediacap
+  | mediaatr
   | nl
   | nl1
   | nl1f
@@ -644,9 +644,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | wls
   | wsh">
 
-<!ENTITY % inline_level.group
-  "#PCDATA
-  | abbr
+  <!ENTITY % character_styles
+  "abbr
   | ac
   | b
   | bcv
@@ -654,7 +653,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | ccust1
   | ccust2
   | ccust3
-  | cemd
   | chemb
   | code
   | code-b
@@ -670,7 +668,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | dispk-i
   | dropcap
   | dropcap-i
-  | enn
   | ennum
   | enref
   | fighn
@@ -678,7 +675,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | first-i
   | fnnum
   | fnref
-  | fol
   | frac
   | frac-b
   | frac-bi
@@ -692,14 +688,14 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | gt-i
   | gt-sm
   | gtref
-  | gtref-i
-  | gtref-sm
   | heb
   | heb-b
   | heb-bi
   | heb-i
   | heb-u
   | hemb
+  | gtref-i
+  | gtref-sm
   | i
   | idx
   | img
@@ -760,12 +756,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | red-sm
   | red-sm-i
   | red-sm-ob
-  | rh
-  | rh-i
-  | rhr
-  | rhref
-  | rhref1
-  | rhv
   | sm
   | sm-b
   | sm-bi
@@ -820,10 +810,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | theb-ob
   | theb-red
   | thn
-  | tocnum
   | trh
   | trh-i
-  | tso
   | u
   | url
   | ver
@@ -831,4048 +819,3991 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | xbr
   | xref
   | xref-i">
+<!-- ============================================================ -->
+<!--                             Root                             -->
+<!-- ============================================================ -->
 
-<!-- ============================================================= -->
-<!--                   Main-Level Elements                         -->
-<!-- ============================================================= -->
-
-  <!ELEMENT sam (%paragraph_level.group; | table )+ >
+  <!ELEMENT sam (%paragraph_styles; | table)+ >
   <!ATTLIST sam
-      %coreattrs;
-      bver CDATA #IMPLIED
-      lang   CDATA #IMPLIED
+    %coreattrs;
+    bver  CDATA  #IMPLIED
+    lang  CDATA  #IMPLIED
   >
 
-<!-- ============================================================= -->
-<!--                   Paragraph-Level Elements                    -->
-<!-- ============================================================= -->
+<!-- ============================================================ -->
+<!--                 Specialized Structure Styles                 -->
+<!-- ============================================================ -->
 
+  <!ELEMENT table ( tr+ ) >
+  <!ATTLIST table
+    %coreattrs;
+    width  CDATA  #IMPLIED
+    style  CDATA  #IMPLIED
+    border  CDATA  #IMPLIED
+    orient  CDATA  #IMPLIED
+  >
 
-  <!ELEMENT ah ( %inline_level.group; )* >
+  <!ELEMENT tr ( cell+ ) >
+  <!ATTLIST tr
+    %coreattrs;
+    align  CDATA  #IMPLIED
+    valign  CDATA  #IMPLIED
+  >
+
+  <!ELEMENT cell (%paragraph_styles;)* >
+  <!ATTLIST cell
+    %coreattrs;
+    colspan  CDATA  #IMPLIED
+    rowspan  CDATA  #IMPLIED
+    align  CDATA  #IMPLIED
+  >
+
+<!-- ============================================================ -->
+<!--                       Paragraph Styles                       -->
+<!-- ============================================================ -->
+
+  <!ELEMENT ah ( #PCDATA | %character_styles; )* >
   <!ATTLIST ah
     %coreattrs;
   >
-  
-  <!ELEMENT ahaft ( %inline_level.group; )* >
+
+  <!ELEMENT ahaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST ahaft
     %coreattrs;
   >
-  
-  <!ELEMENT ans ( %inline_level.group; )* >
+
+  <!ELEMENT ans ( #PCDATA | %character_styles; )* >
   <!ATTLIST ans
     %coreattrs;
   >
-  
-  <!ELEMENT ansf ( %inline_level.group; )* >
+
+  <!ELEMENT ansf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ansf
     %coreattrs;
   >
-  
-  <!ELEMENT ard ( %inline_level.group; )* >
+
+  <!ELEMENT ard ( #PCDATA | %character_styles; )* >
   <!ATTLIST ard
     %coreattrs;
   >
-  
-  <!ELEMENT au ( %inline_level.group; )* >
+
+  <!ELEMENT au ( #PCDATA | %character_styles; )* >
   <!ATTLIST au
     %coreattrs;
   >
-  
-  <!ELEMENT au1 ( %inline_level.group; )* >
+
+  <!ELEMENT au1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST au1
     %coreattrs;
   >
-  
-  <!ELEMENT aubio ( %inline_level.group; )* >
+
+  <!ELEMENT aubio ( #PCDATA | %character_styles; )* >
   <!ATTLIST aubio
     %coreattrs;
   >
-  
-  <!ELEMENT aubiof ( %inline_level.group; )* >
+
+  <!ELEMENT aubiof ( #PCDATA | %character_styles; )* >
   <!ATTLIST aubiof
     %coreattrs;
   >
-  
-  <!ELEMENT audio ( %inline_level.group; )* >
+
+  <!ELEMENT audio ( #PCDATA | %character_styles; )* >
   <!ATTLIST audio
     %coreattrs;
   >
-  
-  <!ELEMENT bh ( %inline_level.group; )* >
+
+  <!ELEMENT bh ( #PCDATA | %character_styles; )* >
   <!ATTLIST bh
     %coreattrs;
   >
-  
-  <!ELEMENT bhaft ( %inline_level.group; )* >
+
+  <!ELEMENT bhaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST bhaft
     %coreattrs;
   >
-  
-  <!ELEMENT bk ( %inline_level.group; )* >
+
+  <!ELEMENT bk ( #PCDATA | %character_styles; )* >
   <!ATTLIST bk
     %coreattrs;
   >
-  
-  <!ELEMENT bk1 ( %inline_level.group; )* >
+
+  <!ELEMENT bk1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bk1
     %coreattrs;
   >
-  
-  <!ELEMENT bk2 ( %inline_level.group; )* >
+
+  <!ELEMENT bk2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bk2
     %coreattrs;
   >
-  
-  <!ELEMENT bkau ( %inline_level.group; )* >
+
+  <!ELEMENT bkau ( #PCDATA | %character_styles; )* >
   <!ATTLIST bkau
     %coreattrs;
   >
-  
-  <!ELEMENT bkau1 ( %inline_level.group; )* >
+
+  <!ELEMENT bkau1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bkau1
     %coreattrs;
   >
-  
-  <!ELEMENT bkht ( %inline_level.group; )* >
+
+  <!ELEMENT bkht ( #PCDATA | %character_styles; )* >
   <!ATTLIST bkht
     %coreattrs;
   >
-  
-  <!ELEMENT bkpub ( %inline_level.group; )* >
+
+  <!ELEMENT bkpub ( #PCDATA | %character_styles; )* >
   <!ATTLIST bkpub
     %coreattrs;
   >
-  
-  <!ELEMENT bkpub1 ( %inline_level.group; )* >
+
+  <!ELEMENT bkpub1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bkpub1
     %coreattrs;
   >
-  
-  <!ELEMENT bksect ( %inline_level.group; )* >
+
+  <!ELEMENT bksect ( #PCDATA | %character_styles; )* >
   <!ATTLIST bksect
     %coreattrs;
   >
-  
-  <!ELEMENT bl ( %inline_level.group; )* >
+
+  <!ELEMENT bl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bl
     %coreattrs;
   >
-  
-  <!ELEMENT bl1 ( %inline_level.group; )* >
+
+  <!ELEMENT bl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bl1
     %coreattrs;
   >
-  
-  <!ELEMENT bl1f ( %inline_level.group; )* >
+
+  <!ELEMENT bl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST bl1f
     %coreattrs;
   >
-  
-  <!ELEMENT bl1l ( %inline_level.group; )* >
+
+  <!ELEMENT bl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST bl1l
     %coreattrs;
   >
-  
-  <!ELEMENT bl1p ( %inline_level.group; )* >
+
+  <!ELEMENT bl1p ( #PCDATA | %character_styles; )* >
   <!ATTLIST bl1p
     %coreattrs;
   >
-  
-  <!ELEMENT bl1pl ( %inline_level.group; )* >
+
+  <!ELEMENT bl1pl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bl1pl
     %coreattrs;
   >
-  
-  <!ELEMENT bl1s ( %inline_level.group; )* >
+
+  <!ELEMENT bl1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST bl1s
     %coreattrs;
   >
-  
-  <!ELEMENT blf ( %inline_level.group; )* >
+
+  <!ELEMENT blf ( #PCDATA | %character_styles; )* >
   <!ATTLIST blf
     %coreattrs;
   >
-  
-  <!ELEMENT blh ( %inline_level.group; )* >
+
+  <!ELEMENT blh ( #PCDATA | %character_styles; )* >
   <!ATTLIST blh
     %coreattrs;
   >
-  
-  <!ELEMENT bll ( %inline_level.group; )* >
+
+  <!ELEMENT bll ( #PCDATA | %character_styles; )* >
   <!ATTLIST bll
     %coreattrs;
   >
-  
-  <!ELEMENT blp ( %inline_level.group; )* >
+
+  <!ELEMENT blp ( #PCDATA | %character_styles; )* >
   <!ATTLIST blp
     %coreattrs;
   >
-  
-  <!ELEMENT blpl ( %inline_level.group; )* >
+
+  <!ELEMENT blpl ( #PCDATA | %character_styles; )* >
   <!ATTLIST blpl
     %coreattrs;
   >
-  
-  <!ELEMENT bls ( %inline_level.group; )* >
+
+  <!ELEMENT bls ( #PCDATA | %character_styles; )* >
   <!ATTLIST bls
     %coreattrs;
   >
-  
-  <!ELEMENT bq ( %inline_level.group; )* >
+
+  <!ELEMENT bq ( #PCDATA | %character_styles; )* >
   <!ATTLIST bq
     %coreattrs;
   >
-  
-  <!ELEMENT bq1 ( %inline_level.group; )* >
+
+  <!ELEMENT bq1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bq1
     %coreattrs;
   >
-  
-  <!ELEMENT bq1f ( %inline_level.group; )* >
+
+  <!ELEMENT bq1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST bq1f
     %coreattrs;
   >
-  
-  <!ELEMENT bq1l ( %inline_level.group; )* >
+
+  <!ELEMENT bq1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST bq1l
     %coreattrs;
   >
-  
-  <!ELEMENT bq1s ( %inline_level.group; )* >
+
+  <!ELEMENT bq1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST bq1s
     %coreattrs;
   >
-  
-  <!ELEMENT bqaft ( %inline_level.group; )* >
+
+  <!ELEMENT bqaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqaft
     %coreattrs;
   >
-  
-  <!ELEMENT bqf ( %inline_level.group; )* >
+
+  <!ELEMENT bqf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqf
     %coreattrs;
   >
-  
-  <!ELEMENT bqh ( %inline_level.group; )* >
+
+  <!ELEMENT bqh ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqh
     %coreattrs;
   >
-  
-  <!ELEMENT bql ( %inline_level.group; )* >
+
+  <!ELEMENT bql ( #PCDATA | %character_styles; )* >
   <!ATTLIST bql
     %coreattrs;
   >
-  
-  <!ELEMENT bqnl ( %inline_level.group; )* >
+
+  <!ELEMENT bqnl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqnl
     %coreattrs;
   >
-  
-  <!ELEMENT bqnlf ( %inline_level.group; )* >
+
+  <!ELEMENT bqnlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqnlf
     %coreattrs;
   >
-  
-  <!ELEMENT bqnll ( %inline_level.group; )* >
+
+  <!ELEMENT bqnll ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqnll
     %coreattrs;
   >
-  
-  <!ELEMENT bqnls ( %inline_level.group; )* >
+
+  <!ELEMENT bqnls ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqnls
     %coreattrs;
   >
-  
-  <!ELEMENT bqo ( %inline_level.group; )* >
+
+  <!ELEMENT bqo ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqo
     %coreattrs;
   >
-  
-  <!ELEMENT bqs ( %inline_level.group; )* >
+
+  <!ELEMENT bqs ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqs
     %coreattrs;
   >
-  
-  <!ELEMENT bqt ( %inline_level.group; )* >
+
+  <!ELEMENT bqt ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqt
     %coreattrs;
   >
-  
-  <!ELEMENT bqul ( %inline_level.group; )* >
+
+  <!ELEMENT bqul ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqul
     %coreattrs;
   >
-  
-  <!ELEMENT bqulf ( %inline_level.group; )* >
+
+  <!ELEMENT bqulf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqulf
     %coreattrs;
   >
-  
-  <!ELEMENT bqull ( %inline_level.group; )* >
+
+  <!ELEMENT bqull ( #PCDATA | %character_styles; )* >
   <!ATTLIST bqull
     %coreattrs;
   >
-  
-  <!ELEMENT bquls ( %inline_level.group; )* >
+
+  <!ELEMENT bquls ( #PCDATA | %character_styles; )* >
   <!ATTLIST bquls
     %coreattrs;
   >
-  
-  <!ELEMENT bx ( %inline_level.group; )* >
+
+  <!ELEMENT bx ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx
     %coreattrs;
   >
-  
-  <!ELEMENT bx1 ( %inline_level.group; )* >
+
+  <!ELEMENT bx1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1
     %coreattrs;
   >
-  
-  <!ELEMENT bx1aft ( %inline_level.group; )* >
+
+  <!ELEMENT bx1aft ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1aft
     %coreattrs;
   >
-  
-  <!ELEMENT bx1ah ( %inline_level.group; )* >
+
+  <!ELEMENT bx1ah ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1ah
     %coreattrs;
   >
-  
-  <!ELEMENT bx1bh ( %inline_level.group; )* >
+
+  <!ELEMENT bx1bh ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1bh
     %coreattrs;
   >
-  
-  <!ELEMENT bx1bq ( %inline_level.group; )* >
+
+  <!ELEMENT bx1bq ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1bq
     %coreattrs;
   >
-  
-  <!ELEMENT bx1bqf ( %inline_level.group; )* >
+
+  <!ELEMENT bx1bqf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1bqf
     %coreattrs;
   >
-  
-  <!ELEMENT bx1bql ( %inline_level.group; )* >
+
+  <!ELEMENT bx1bql ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1bql
     %coreattrs;
   >
-  
-  <!ELEMENT bx1bqs ( %inline_level.group; )* >
+
+  <!ELEMENT bx1bqs ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1bqs
     %coreattrs;
   >
-  
-  <!ELEMENT bx1con ( %inline_level.group; )* >
+
+  <!ELEMENT bx1con ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1con
     %coreattrs;
   >
-  
-  <!ELEMENT bx1f ( %inline_level.group; )* >
+
+  <!ELEMENT bx1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1f
     %coreattrs;
   >
-  
-  <!ELEMENT bx1h ( %inline_level.group; )* >
+
+  <!ELEMENT bx1h ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1h
     %coreattrs;
   >
-  
-  <!ELEMENT bx1l ( %inline_level.group; )* >
+
+  <!ELEMENT bx1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1l
     %coreattrs;
   >
-  
-  <!ELEMENT bx1nl ( %inline_level.group; )* >
+
+  <!ELEMENT bx1nl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1nl
     %coreattrs;
   >
-  
-  <!ELEMENT bx1nlf ( %inline_level.group; )* >
+
+  <!ELEMENT bx1nlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1nlf
     %coreattrs;
   >
-  
-  <!ELEMENT bx1nll ( %inline_level.group; )* >
+
+  <!ELEMENT bx1nll ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1nll
     %coreattrs;
   >
-  
-  <!ELEMENT bx1nlp ( %inline_level.group; )* >
+
+  <!ELEMENT bx1nlp ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1nlp
     %coreattrs;
   >
-  
-  <!ELEMENT bx1sl ( %inline_level.group; )* >
+
+  <!ELEMENT bx1s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST bx1s
+    %coreattrs;
+  >
+
+  <!ELEMENT bx1sl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1sl
     %coreattrs;
   >
-  
-  <!ELEMENT bx1slf ( %inline_level.group; )* >
+
+  <!ELEMENT bx1slf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1slf
     %coreattrs;
   >
-  
-  <!ELEMENT bx1sll ( %inline_level.group; )* >
+
+  <!ELEMENT bx1sll ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1sll
     %coreattrs;
   >
-  
-  <!ELEMENT bx1t ( %inline_level.group; )* >
+
+  <!ELEMENT bx1t ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1t
     %coreattrs;
   >
-  
-  <!ELEMENT bx1ul ( %inline_level.group; )* >
+
+  <!ELEMENT bx1ul ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1ul
     %coreattrs;
   >
-  
-  <!ELEMENT bx1ulf ( %inline_level.group; )* >
+
+  <!ELEMENT bx1ulf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1ulf
     %coreattrs;
   >
-  
-  <!ELEMENT bx1ull ( %inline_level.group; )* >
+
+  <!ELEMENT bx1ull ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1ull
     %coreattrs;
   >
-  
-  <!ELEMENT bx1ulp ( %inline_level.group; )* >
+
+  <!ELEMENT bx1ulp ( #PCDATA | %character_styles; )* >
   <!ATTLIST bx1ulp
     %coreattrs;
   >
-  
-  <!ELEMENT bxaft ( %inline_level.group; )* >
+
+  <!ELEMENT bxaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxaft
     %coreattrs;
   >
-  
-  <!ELEMENT bxah ( %inline_level.group; )* >
+
+  <!ELEMENT bxah ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxah
     %coreattrs;
   >
-  
-  <!ELEMENT bxau ( %inline_level.group; )* >
+
+  <!ELEMENT bxau ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxau
     %coreattrs;
   >
-  
-  <!ELEMENT bxau1 ( %inline_level.group; )* >
+
+  <!ELEMENT bxau1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxau1
     %coreattrs;
   >
-  
-  <!ELEMENT bxbh ( %inline_level.group; )* >
+
+  <!ELEMENT bxbh ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxbh
     %coreattrs;
   >
-  
-  <!ELEMENT bxbq ( %inline_level.group; )* >
+
+  <!ELEMENT bxbq ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxbq
     %coreattrs;
   >
-  
-  <!ELEMENT bxbqf ( %inline_level.group; )* >
+
+  <!ELEMENT bxbqf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxbqf
     %coreattrs;
   >
-  
-  <!ELEMENT bxbql ( %inline_level.group; )* >
+
+  <!ELEMENT bxbql ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxbql
     %coreattrs;
   >
-  
-  <!ELEMENT bxbqs ( %inline_level.group; )* >
+
+  <!ELEMENT bxbqs ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxbqs
     %coreattrs;
   >
-  
-  <!ELEMENT bxcon ( %inline_level.group; )* >
+
+  <!ELEMENT bxcon ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxcon
     %coreattrs;
   >
-  
-  <!ELEMENT bxf ( %inline_level.group; )* >
+
+  <!ELEMENT bxf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxf
     %coreattrs;
   >
-  
-  <!ELEMENT bxh ( %inline_level.group; )* >
+
+  <!ELEMENT bxh ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxh
     %coreattrs;
   >
-  
-  <!ELEMENT bxl ( %inline_level.group; )* >
+
+  <!ELEMENT bxl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxl
     %coreattrs;
   >
-  
-  <!ELEMENT bxnl ( %inline_level.group; )* >
+
+  <!ELEMENT bxnl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxnl
     %coreattrs;
   >
-  
-  <!ELEMENT bxnlf ( %inline_level.group; )* >
+
+  <!ELEMENT bxnlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxnlf
     %coreattrs;
   >
-  
-  <!ELEMENT bxnll ( %inline_level.group; )* >
+
+  <!ELEMENT bxnll ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxnll
     %coreattrs;
   >
-  
-  <!ELEMENT bxnlp ( %inline_level.group; )* >
+
+  <!ELEMENT bxnlp ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxnlp
     %coreattrs;
   >
-  
-  <!ELEMENT bxnls ( %inline_level.group; )* >
+
+  <!ELEMENT bxnls ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxnls
     %coreattrs;
   >
-  
-  <!ELEMENT bxo ( %inline_level.group; )* >
+
+  <!ELEMENT bxo ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxo
     %coreattrs;
   >
-  
-  <!ELEMENT bxs ( %inline_level.group; )* >
+
+  <!ELEMENT bxs ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxs
     %coreattrs;
   >
-  
-  <!ELEMENT bxsl ( %inline_level.group; )* >
+
+  <!ELEMENT bxsl ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxsl
     %coreattrs;
   >
-  
-  <!ELEMENT bxslf ( %inline_level.group; )* >
+
+  <!ELEMENT bxslf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxslf
     %coreattrs;
   >
-  
-  <!ELEMENT bxsll ( %inline_level.group; )* >
+
+  <!ELEMENT bxsll ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxsll
     %coreattrs;
   >
-  
-  <!ELEMENT bxt ( %inline_level.group; )* >
+
+  <!ELEMENT bxt ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxt
     %coreattrs;
   >
-  
-  <!ELEMENT bxul ( %inline_level.group; )* >
+
+  <!ELEMENT bxul ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxul
     %coreattrs;
   >
-  
-  <!ELEMENT bxulf ( %inline_level.group; )* >
+
+  <!ELEMENT bxulf ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxulf
     %coreattrs;
   >
-  
-  <!ELEMENT bxull ( %inline_level.group; )* >
+
+  <!ELEMENT bxull ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxull
     %coreattrs;
   >
-  
-  <!ELEMENT bxulp ( %inline_level.group; )* >
+
+  <!ELEMENT bxulp ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxulp
     %coreattrs;
   >
-  
-  <!ELEMENT bxuls ( %inline_level.group; )* >
+
+  <!ELEMENT bxuls ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxuls
     %coreattrs;
   >
-  
-  <!ELEMENT call ( %inline_level.group; )* >
+
+  <!ELEMENT call ( #PCDATA | %character_styles; )* >
   <!ATTLIST call
     %coreattrs;
   >
-  
-  <!ELEMENT ch ( %inline_level.group; )* >
+
+  <!ELEMENT ch ( #PCDATA | %character_styles; )* >
   <!ATTLIST ch
     %coreattrs;
   >
-  
-  <!ELEMENT chaft ( %inline_level.group; )* >
+
+  <!ELEMENT chaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST chaft
     %coreattrs;
   >
-  
-  <!ELEMENT chsect ( %inline_level.group; )* >
+
+  <!ELEMENT chsect ( #PCDATA | %character_styles; )* >
   <!ATTLIST chsect
     %coreattrs;
   >
-  
-  <!ELEMENT chsubsect ( %inline_level.group; )* >
+
+  <!ELEMENT chsubsect ( #PCDATA | %character_styles; )* >
   <!ATTLIST chsubsect
     %coreattrs;
   >
-  
-  <!ELEMENT cip ( %inline_level.group; )* >
+
+  <!ELEMENT cip ( #PCDATA | %character_styles; )* >
   <!ATTLIST cip
     %coreattrs;
   >
-  
-  <!ELEMENT cip1 ( %inline_level.group; )* >
+
+  <!ELEMENT cip1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST cip1
     %coreattrs;
   >
-  
-  <!ELEMENT cip2 ( %inline_level.group; )* >
+
+  <!ELEMENT cip2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST cip2
     %coreattrs;
   >
-  
-  <!ELEMENT cipf ( %inline_level.group; )* >
+
+  <!ELEMENT cipf ( #PCDATA | %character_styles; )* >
   <!ATTLIST cipf
     %coreattrs;
   >
-  
-  <!ELEMENT cipf1 ( %inline_level.group; )* >
+
+  <!ELEMENT cipf1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST cipf1
     %coreattrs;
   >
-  
-  <!ELEMENT cipl ( %inline_level.group; )* >
+
+  <!ELEMENT cipl ( #PCDATA | %character_styles; )* >
   <!ATTLIST cipl
     %coreattrs;
   >
-  
-  <!ELEMENT cl ( %inline_level.group; )* >
+
+  <!ELEMENT cl ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl
     %coreattrs;
   >
-  
-  <!ELEMENT cl1 ( %inline_level.group; )* >
+
+  <!ELEMENT cl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl1
     %coreattrs;
   >
-  
-  <!ELEMENT cl1f ( %inline_level.group; )* >
+
+  <!ELEMENT cl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl1f
     %coreattrs;
   >
-  
-  <!ELEMENT cl1l ( %inline_level.group; )* >
+
+  <!ELEMENT cl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl1l
     %coreattrs;
   >
-  
-  <!ELEMENT cl1s ( %inline_level.group; )* >
+
+  <!ELEMENT cl1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl1s
     %coreattrs;
   >
-  
-  <!ELEMENT cl2 ( %inline_level.group; )* >
+
+  <!ELEMENT cl2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl2
     %coreattrs;
   >
-  
-  <!ELEMENT cl2f ( %inline_level.group; )* >
+
+  <!ELEMENT cl2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl2f
     %coreattrs;
   >
-  
-  <!ELEMENT cl2l ( %inline_level.group; )* >
+
+  <!ELEMENT cl2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl2l
     %coreattrs;
   >
-  
-  <!ELEMENT cl2s ( %inline_level.group; )* >
+
+  <!ELEMENT cl2s ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl2s
     %coreattrs;
   >
-  
-  <!ELEMENT cl3 ( %inline_level.group; )* >
+
+  <!ELEMENT cl3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl3
     %coreattrs;
   >
-  
-  <!ELEMENT cl3f ( %inline_level.group; )* >
+
+  <!ELEMENT cl3f ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl3f
     %coreattrs;
   >
-  
-  <!ELEMENT cl3l ( %inline_level.group; )* >
+
+  <!ELEMENT cl3l ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl3l
     %coreattrs;
   >
-  
-  <!ELEMENT cl3s ( %inline_level.group; )* >
+
+  <!ELEMENT cl3s ( #PCDATA | %character_styles; )* >
   <!ATTLIST cl3s
     %coreattrs;
   >
-  
-  <!ELEMENT clf ( %inline_level.group; )* >
+
+  <!ELEMENT clf ( #PCDATA | %character_styles; )* >
   <!ATTLIST clf
     %coreattrs;
   >
-  
-  <!ELEMENT cll ( %inline_level.group; )* >
+
+  <!ELEMENT cll ( #PCDATA | %character_styles; )* >
   <!ATTLIST cll
     %coreattrs;
   >
-  
-  <!ELEMENT cls ( %inline_level.group; )* >
+
+  <!ELEMENT cls ( #PCDATA | %character_styles; )* >
   <!ATTLIST cls
     %coreattrs;
   >
-  
-  <!ELEMENT cn ( %inline_level.group; )* >
+
+  <!ELEMENT cn ( #PCDATA | %character_styles; )* >
   <!ATTLIST cn
     %coreattrs;
   >
-  
-  <!ELEMENT com ( %inline_level.group; )* >
+
+  <!ELEMENT com ( #PCDATA | %character_styles; )* >
   <!ATTLIST com
     %coreattrs;
   >
-  
-  <!ELEMENT crt ( %inline_level.group; )* >
+
+  <!ELEMENT crt ( #PCDATA | %character_styles; )* >
   <!ATTLIST crt
     %coreattrs;
   >
-  
-  <!ELEMENT crt1 ( %inline_level.group; )* >
+
+  <!ELEMENT crt1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST crt1
     %coreattrs;
   >
-  
-  <!ELEMENT crt1f ( %inline_level.group; )* >
+
+  <!ELEMENT crt1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST crt1f
     %coreattrs;
   >
-  
-  <!ELEMENT crt2 ( %inline_level.group; )* >
+
+  <!ELEMENT crt2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST crt2
     %coreattrs;
   >
-  
-  <!ELEMENT crt3 ( %inline_level.group; )* >
+
+  <!ELEMENT crt3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST crt3
     %coreattrs;
   >
-  
-  <!ELEMENT crtf ( %inline_level.group; )* >
+
+  <!ELEMENT crtf ( #PCDATA | %character_styles; )* >
   <!ATTLIST crtf
     %coreattrs;
   >
-  
-  <!ELEMENT cs ( %inline_level.group; )* >
+
+  <!ELEMENT cs ( #PCDATA | %character_styles; )* >
   <!ATTLIST cs
     %coreattrs;
   >
-  
-  <!ELEMENT ct ( %inline_level.group; )* >
+
+  <!ELEMENT ct ( #PCDATA | %character_styles; )* >
   <!ATTLIST ct
     %coreattrs;
   >
-  
-  <!ELEMENT ctbm ( %inline_level.group; )* >
+
+  <!ELEMENT ctbm ( #PCDATA | %character_styles; )* >
   <!ATTLIST ctbm
     %coreattrs;
   >
-  
-  <!ELEMENT ctfm ( %inline_level.group; )* >
+
+  <!ELEMENT ctfm ( #PCDATA | %character_styles; )* >
   <!ATTLIST ctfm
     %coreattrs;
   >
-  
-  <!ELEMENT ctoc ( %inline_level.group; )* >
+
+  <!ELEMENT ctoc ( #PCDATA | %character_styles; )* >
   <!ATTLIST ctoc
     %coreattrs;
   >
-  
-  <!ELEMENT ctoc1 ( %inline_level.group; )* >
+
+  <!ELEMENT ctoc1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ctoc1
     %coreattrs;
   >
-  
-  <!ELEMENT ctoch ( %inline_level.group; )* >
+
+  <!ELEMENT ctoch ( #PCDATA | %character_styles; )* >
   <!ATTLIST ctoch
     %coreattrs;
   >
-  
-  <!ELEMENT ded ( %inline_level.group; )* >
+
+  <!ELEMENT ded ( #PCDATA | %character_styles; )* >
   <!ATTLIST ded
     %coreattrs;
   >
-  
-  <!ELEMENT ded1 ( %inline_level.group; )* >
+
+  <!ELEMENT ded1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ded1
     %coreattrs;
   >
-  
-  <!ELEMENT ded1f ( %inline_level.group; )* >
+
+  <!ELEMENT ded1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST ded1f
     %coreattrs;
   >
-  
-  <!ELEMENT dedf ( %inline_level.group; )* >
+
+  <!ELEMENT dedf ( #PCDATA | %character_styles; )* >
   <!ATTLIST dedf
     %coreattrs;
   >
-  
-  <!ELEMENT dh ( %inline_level.group; )* >
+
+  <!ELEMENT dh ( #PCDATA | %character_styles; )* >
   <!ATTLIST dh
     %coreattrs;
   >
-  
-  <!ELEMENT dhaft ( %inline_level.group; )* >
+
+  <!ELEMENT dhaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST dhaft
     %coreattrs;
   >
-  
-  <!ELEMENT dia ( %inline_level.group; )* >
+
+  <!ELEMENT dia ( #PCDATA | %character_styles; )* >
   <!ATTLIST dia
     %coreattrs;
   >
-  
-  <!ELEMENT diaf ( %inline_level.group; )* >
+
+  <!ELEMENT diaf ( #PCDATA | %character_styles; )* >
   <!ATTLIST diaf
     %coreattrs;
   >
-  
-  <!ELEMENT dial ( %inline_level.group; )* >
+
+  <!ELEMENT dial ( #PCDATA | %character_styles; )* >
   <!ATTLIST dial
     %coreattrs;
   >
-  
-  <!ELEMENT diap ( %inline_level.group; )* >
+
+  <!ELEMENT diap ( #PCDATA | %character_styles; )* >
   <!ATTLIST diap
     %coreattrs;
   >
-  
-  <!ELEMENT diapl ( %inline_level.group; )* >
+
+  <!ELEMENT diapl ( #PCDATA | %character_styles; )* >
   <!ATTLIST diapl
     %coreattrs;
   >
-  
-  <!ELEMENT dias ( %inline_level.group; )* >
+
+  <!ELEMENT dias ( #PCDATA | %character_styles; )* >
   <!ATTLIST dias
     %coreattrs;
   >
-  
-  <!ELEMENT dl ( %inline_level.group; )* >
+
+  <!ELEMENT dl ( #PCDATA | %character_styles; )* >
   <!ATTLIST dl
     %coreattrs;
   >
-  
-  <!ELEMENT dl1 ( %inline_level.group; )* >
+
+  <!ELEMENT dl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST dl1
     %coreattrs;
   >
-  
-  <!ELEMENT dt ( %inline_level.group; )* >
+
+  <!ELEMENT dt ( #PCDATA | %character_styles; )* >
   <!ATTLIST dt
     %coreattrs;
   >
-  
-  <!ELEMENT dtsub ( %inline_level.group; )* >
+
+  <!ELEMENT dtsub ( #PCDATA | %character_styles; )* >
   <!ATTLIST dtsub
     %coreattrs;
   >
-  
-  <!ELEMENT eds ( %inline_level.group; )* >
+
+  <!ELEMENT eds ( #PCDATA | %character_styles; )* >
   <!ATTLIST eds
     %coreattrs;
   >
-  
-  <!ELEMENT eh ( %inline_level.group; )* >
+
+  <!ELEMENT eh ( #PCDATA | %character_styles; )* >
   <!ATTLIST eh
     %coreattrs;
   >
-  
-  <!ELEMENT ehaft ( %inline_level.group; )* >
+
+  <!ELEMENT ehaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST ehaft
     %coreattrs;
   >
-  
-  <!ELEMENT en ( %inline_level.group; )* >
+
+  <!ELEMENT en ( #PCDATA | %character_styles; )* >
   <!ATTLIST en
     %coreattrs;
   >
-  
-  <!ELEMENT end ( %inline_level.group; )* >
+
+  <!ELEMENT end ( #PCDATA | %character_styles; )* >
   <!ATTLIST end
     %coreattrs;
   >
-  
-  <!ELEMENT enhn ( %inline_level.group; )* >
+
+  <!ELEMENT enhn ( #PCDATA | %character_styles; )* >
   <!ATTLIST enhn
     %coreattrs;
   >
-  
-  <!ELEMENT enp ( %inline_level.group; )* >
+
+  <!ELEMENT enp ( #PCDATA | %character_styles; )* >
   <!ATTLIST enp
     %coreattrs;
   >
-  
-  <!ELEMENT ep ( %inline_level.group; )* >
+
+  <!ELEMENT ep ( #PCDATA | %character_styles; )* >
   <!ATTLIST ep
     %coreattrs;
   >
-  
-  <!ELEMENT ep1 ( %inline_level.group; )* >
+
+  <!ELEMENT ep1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ep1
     %coreattrs;
   >
-  
-  <!ELEMENT ep2 ( %inline_level.group; )* >
+
+  <!ELEMENT ep2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ep2
     %coreattrs;
   >
-  
-  <!ELEMENT epaft ( %inline_level.group; )* >
+
+  <!ELEMENT epaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST epaft
     %coreattrs;
   >
-  
-  <!ELEMENT epf ( %inline_level.group; )* >
+
+  <!ELEMENT epf ( #PCDATA | %character_styles; )* >
   <!ATTLIST epf
     %coreattrs;
   >
-  
-  <!ELEMENT epl ( %inline_level.group; )* >
+
+  <!ELEMENT epl ( #PCDATA | %character_styles; )* >
   <!ATTLIST epl
     %coreattrs;
   >
-  
-  <!ELEMENT eps ( %inline_level.group; )* >
+
+  <!ELEMENT eps ( #PCDATA | %character_styles; )* >
   <!ATTLIST eps
     %coreattrs;
   >
-  
-  <!ELEMENT epsl ( %inline_level.group; )* >
+
+  <!ELEMENT epsl ( #PCDATA | %character_styles; )* >
   <!ATTLIST epsl
     %coreattrs;
   >
-  
-  <!ELEMENT epsl1 ( %inline_level.group; )* >
+
+  <!ELEMENT epsl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST epsl1
     %coreattrs;
   >
-  
-  <!ELEMENT epslf ( %inline_level.group; )* >
+
+  <!ELEMENT epslf ( #PCDATA | %character_styles; )* >
   <!ATTLIST epslf
     %coreattrs;
   >
-  
-  <!ELEMENT ept ( %inline_level.group; )* >
+
+  <!ELEMENT ept ( #PCDATA | %character_styles; )* >
   <!ATTLIST ept
     %coreattrs;
   >
-  
-  <!ELEMENT ept1 ( %inline_level.group; )* >
+
+  <!ELEMENT ept1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ept1
     %coreattrs;
   >
-  
-  <!ELEMENT eq ( %inline_level.group; )* >
+
+  <!ELEMENT eq ( #PCDATA | %character_styles; )* >
   <!ATTLIST eq
     %coreattrs;
   >
-  
-  <!ELEMENT eqaft ( %inline_level.group; )* >
+
+  <!ELEMENT eqaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST eqaft
     %coreattrs;
   >
-  
-  <!ELEMENT ex ( %inline_level.group; )* >
+
+  <!ELEMENT ex ( #PCDATA | %character_styles; )* >
   <!ATTLIST ex
     %coreattrs;
   >
-  
-  <!ELEMENT exaft ( %inline_level.group; )* >
+
+  <!ELEMENT exaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST exaft
     %coreattrs;
   >
-  
-  <!ELEMENT exah ( %inline_level.group; )* >
+
+  <!ELEMENT exah ( #PCDATA | %character_styles; )* >
   <!ATTLIST exah
     %coreattrs;
   >
-  
-  <!ELEMENT exbh ( %inline_level.group; )* >
+
+  <!ELEMENT exbh ( #PCDATA | %character_styles; )* >
   <!ATTLIST exbh
     %coreattrs;
   >
-  
-  <!ELEMENT exf ( %inline_level.group; )* >
+
+  <!ELEMENT exf ( #PCDATA | %character_styles; )* >
   <!ATTLIST exf
     %coreattrs;
   >
-  
-  <!ELEMENT exh ( %inline_level.group; )* >
+
+  <!ELEMENT exh ( #PCDATA | %character_styles; )* >
   <!ATTLIST exh
     %coreattrs;
   >
-  
-  <!ELEMENT exl ( %inline_level.group; )* >
+
+  <!ELEMENT exl ( #PCDATA | %character_styles; )* >
   <!ATTLIST exl
     %coreattrs;
   >
-  
-  <!ELEMENT exnl ( %inline_level.group; )* >
+
+  <!ELEMENT exnl ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnl
     %coreattrs;
   >
-  
-  <!ELEMENT exnl1 ( %inline_level.group; )* >
+
+  <!ELEMENT exnl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnl1
     %coreattrs;
   >
-  
-  <!ELEMENT exnl1f ( %inline_level.group; )* >
+
+  <!ELEMENT exnl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnl1f
     %coreattrs;
   >
-  
-  <!ELEMENT exnl1l ( %inline_level.group; )* >
+
+  <!ELEMENT exnl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnl1l
     %coreattrs;
   >
-  
-  <!ELEMENT exnl1p ( %inline_level.group; )* >
+
+  <!ELEMENT exnl1p ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnl1p
     %coreattrs;
   >
-  
-  <!ELEMENT exnl1s ( %inline_level.group; )* >
+
+  <!ELEMENT exnl1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnl1s
     %coreattrs;
   >
-  
-  <!ELEMENT exnlf ( %inline_level.group; )* >
+
+  <!ELEMENT exnlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnlf
     %coreattrs;
   >
-  
-  <!ELEMENT exnll ( %inline_level.group; )* >
+
+  <!ELEMENT exnll ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnll
     %coreattrs;
   >
-  
-  <!ELEMENT exnlp ( %inline_level.group; )* >
+
+  <!ELEMENT exnlp ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnlp
     %coreattrs;
   >
-  
-  <!ELEMENT exnls ( %inline_level.group; )* >
+
+  <!ELEMENT exnls ( #PCDATA | %character_styles; )* >
   <!ATTLIST exnls
     %coreattrs;
   >
-  
-  <!ELEMENT exs ( %inline_level.group; )* >
+
+  <!ELEMENT exs ( #PCDATA | %character_styles; )* >
   <!ATTLIST exs
     %coreattrs;
   >
-  
-  <!ELEMENT exul ( %inline_level.group; )* >
+
+  <!ELEMENT exul ( #PCDATA | %character_styles; )* >
   <!ATTLIST exul
     %coreattrs;
   >
-  
-  <!ELEMENT exul1 ( %inline_level.group; )* >
+
+  <!ELEMENT exul1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST exul1
     %coreattrs;
   >
-  
-  <!ELEMENT exul1f ( %inline_level.group; )* >
+
+  <!ELEMENT exul1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST exul1f
     %coreattrs;
   >
-  
-  <!ELEMENT exul1l ( %inline_level.group; )* >
+
+  <!ELEMENT exul1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST exul1l
     %coreattrs;
   >
-  
-  <!ELEMENT exul1p ( %inline_level.group; )* >
+
+  <!ELEMENT exul1p ( #PCDATA | %character_styles; )* >
   <!ATTLIST exul1p
     %coreattrs;
   >
-  
-  <!ELEMENT exul1s ( %inline_level.group; )* >
+
+  <!ELEMENT exul1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST exul1s
     %coreattrs;
   >
-  
-  <!ELEMENT exulf ( %inline_level.group; )* >
+
+  <!ELEMENT exulf ( #PCDATA | %character_styles; )* >
   <!ATTLIST exulf
     %coreattrs;
   >
-  
-  <!ELEMENT exull ( %inline_level.group; )* >
+
+  <!ELEMENT exull ( #PCDATA | %character_styles; )* >
   <!ATTLIST exull
     %coreattrs;
   >
-  
-  <!ELEMENT exulp ( %inline_level.group; )* >
+
+  <!ELEMENT exulp ( #PCDATA | %character_styles; )* >
   <!ATTLIST exulp
     %coreattrs;
   >
-  
-  <!ELEMENT exuls ( %inline_level.group; )* >
+
+  <!ELEMENT exuls ( #PCDATA | %character_styles; )* >
   <!ATTLIST exuls
     %coreattrs;
   >
-  
-  <!ELEMENT fig ( %inline_level.group; )* >
+
+  <!ELEMENT fig ( #PCDATA | %character_styles; )* >
   <!ATTLIST fig
     %coreattrs;
   >
-  
-  <!ELEMENT figatr ( %inline_level.group; )* >
+
+  <!ELEMENT figatr ( #PCDATA | %character_styles; )* >
   <!ATTLIST figatr
     %coreattrs;
   >
-  
-  <!ELEMENT figcap ( %inline_level.group; )* >
+
+  <!ELEMENT figcap ( #PCDATA | %character_styles; )* >
   <!ATTLIST figcap
     %coreattrs;
   >
-  
-  <!ELEMENT figcap1 ( %inline_level.group; )* >
+
+  <!ELEMENT figcap1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST figcap1
     %coreattrs;
   >
-  
-  <!ELEMENT figh ( %inline_level.group; )* >
+
+  <!ELEMENT figh ( #PCDATA | %character_styles; )* >
   <!ATTLIST figh
     %coreattrs;
   >
-  
-  <!ELEMENT figh1 ( %inline_level.group; )* >
+
+  <!ELEMENT figh1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST figh1
     %coreattrs;
   >
-  
-  <!ELEMENT fign ( %inline_level.group; )* >
+
+  <!ELEMENT fign ( #PCDATA | %character_styles; )* >
   <!ATTLIST fign
     %coreattrs;
   >
-  
-  <!ELEMENT fn ( %inline_level.group; )* >
+
+  <!ELEMENT fn ( #PCDATA | %character_styles; )* >
   <!ATTLIST fn
     %coreattrs;
   >
-  
-  <!ELEMENT fnn ( %inline_level.group; )* >
-  <!ATTLIST fnn
-    %coreattrs;
-  >
-  
-  <!ELEMENT fnp ( %inline_level.group; )* >
+
+  <!ELEMENT fnp ( #PCDATA | %character_styles; )* >
   <!ATTLIST fnp
     %coreattrs;
   >
-  
-  <!ELEMENT folio ( %inline_level.group; )* >
-  <!ATTLIST folio
-    %coreattrs;
-  >
-  
-  <!ELEMENT fs ( %inline_level.group; )* >
+
+  <!ELEMENT fs ( #PCDATA | %character_styles; )* >
   <!ATTLIST fs
     %coreattrs;
   >
-  
-  <!ELEMENT glo ( %inline_level.group; )* >
+
+  <!ELEMENT glo ( #PCDATA | %character_styles; )* >
   <!ATTLIST glo
     %coreattrs;
   >
-  
-  <!ELEMENT glof ( %inline_level.group; )* >
+
+  <!ELEMENT glof ( #PCDATA | %character_styles; )* >
   <!ATTLIST glof
     %coreattrs;
   >
-  
-  <!ELEMENT hb ( %inline_level.group; )* >
+
+  <!ELEMENT hb ( #PCDATA | %character_styles; )* >
   <!ATTLIST hb
     %coreattrs;
   >
-  
-  <!ELEMENT hd ( %inline_level.group; )* >
+
+  <!ELEMENT hd ( #PCDATA | %character_styles; )* >
   <!ATTLIST hd
     %coreattrs;
   >
-  
-  <!ELEMENT in ( %inline_level.group; )* >
+
+  <!ELEMENT in ( #PCDATA | %character_styles; )* >
   <!ATTLIST in
     %coreattrs;
   >
-  
-  <!ELEMENT in1 ( %inline_level.group; )* >
+
+  <!ELEMENT in1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST in1
     %coreattrs;
   >
-  
-  <!ELEMENT in2 ( %inline_level.group; )* >
+
+  <!ELEMENT in2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST in2
     %coreattrs;
   >
-  
-  <!ELEMENT in3 ( %inline_level.group; )* >
+
+  <!ELEMENT in3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST in3
     %coreattrs;
   >
-  
-  <!ELEMENT inf ( %inline_level.group; )* >
+
+  <!ELEMENT inf ( #PCDATA | %character_styles; )* >
   <!ATTLIST inf
     %coreattrs;
   >
-  
-  <!ELEMENT inh ( %inline_level.group; )* >
+
+  <!ELEMENT inh ( #PCDATA | %character_styles; )* >
   <!ATTLIST inh
     %coreattrs;
   >
-  
-  <!ELEMENT inh1 ( %inline_level.group; )* >
+
+  <!ELEMENT inh1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST inh1
     %coreattrs;
   >
-  
-  <!ELEMENT inhn ( %inline_level.group; )* >
+
+  <!ELEMENT inhn ( #PCDATA | %character_styles; )* >
   <!ATTLIST inhn
     %coreattrs;
   >
-  
-  <!ELEMENT lo ( %inline_level.group; )* >
+
+  <!ELEMENT lo ( #PCDATA | %character_styles; )* >
   <!ATTLIST lo
     %coreattrs;
   >
-  
-  <!ELEMENT lps ( %inline_level.group; )* >
+
+  <!ELEMENT lps ( #PCDATA | %character_styles; )* >
   <!ATTLIST lps
     %coreattrs;
   >
-  
-  <!ELEMENT lt ( %inline_level.group; )* >
+
+  <!ELEMENT lt ( #PCDATA | %character_styles; )* >
   <!ATTLIST lt
     %coreattrs;
   >
-  
-  <!ELEMENT lta ( %inline_level.group; )* >
+
+  <!ELEMENT lta ( #PCDATA | %character_styles; )* >
   <!ATTLIST lta
     %coreattrs;
   >
-  
-  <!ELEMENT ltaf ( %inline_level.group; )* >
+
+  <!ELEMENT ltaf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltaf
     %coreattrs;
   >
-  
-  <!ELEMENT ltc ( %inline_level.group; )* >
+
+  <!ELEMENT ltc ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltc
     %coreattrs;
   >
-  
-  <!ELEMENT ltd ( %inline_level.group; )* >
+
+  <!ELEMENT ltd ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltd
     %coreattrs;
   >
-  
-  <!ELEMENT ltdf ( %inline_level.group; )* >
+
+  <!ELEMENT ltdf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltdf
     %coreattrs;
   >
-  
-  <!ELEMENT ltf ( %inline_level.group; )* >
+
+  <!ELEMENT ltf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltf
     %coreattrs;
   >
-  
-  <!ELEMENT ltg ( %inline_level.group; )* >
+
+  <!ELEMENT ltg ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltg
     %coreattrs;
   >
-  
-  <!ELEMENT ltl ( %inline_level.group; )* >
+
+  <!ELEMENT ltl ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltl
     %coreattrs;
   >
-  
-  <!ELEMENT lto ( %inline_level.group; )* >
+
+  <!ELEMENT lto ( #PCDATA | %character_styles; )* >
   <!ATTLIST lto
     %coreattrs;
   >
-  
-  <!ELEMENT lts ( %inline_level.group; )* >
+
+  <!ELEMENT lts ( #PCDATA | %character_styles; )* >
   <!ATTLIST lts
     %coreattrs;
   >
-  
-  <!ELEMENT ltsig ( %inline_level.group; )* >
+
+  <!ELEMENT ltsig ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltsig
     %coreattrs;
   >
-  
-  <!ELEMENT ltsigf ( %inline_level.group; )* >
+
+  <!ELEMENT ltsigf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltsigf
     %coreattrs;
   >
-  
-  <!ELEMENT ltsigl ( %inline_level.group; )* >
+
+  <!ELEMENT ltsigl ( #PCDATA | %character_styles; )* >
   <!ATTLIST ltsigl
     %coreattrs;
   >
-  
-  <!ELEMENT mediah ( %inline_level.group; )* >
+
+  <!ELEMENT mediah ( #PCDATA | %character_styles; )* >
   <!ATTLIST mediah
     %coreattrs;
   >
-  
-  <!ELEMENT mediacap ( %inline_level.group; )* >
+
+  <!ELEMENT mediacap ( #PCDATA | %character_styles; )* >
   <!ATTLIST mediacap
     %coreattrs;
   >
-  
-  <!ELEMENT mediaatr ( %inline_level.group; )* >
+
+  <!ELEMENT mediaatr ( #PCDATA | %character_styles; )* >
   <!ATTLIST mediaatr
     %coreattrs;
   >
-  
-  <!ELEMENT nl ( %inline_level.group; )* >
+
+  <!ELEMENT nl ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl
     %coreattrs;
   >
-  
-  <!ELEMENT nl1 ( %inline_level.group; )* >
+
+  <!ELEMENT nl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl1
     %coreattrs;
   >
-  
-  <!ELEMENT nl1f ( %inline_level.group; )* >
+
+  <!ELEMENT nl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl1f
     %coreattrs;
   >
-  
-  <!ELEMENT nl1l ( %inline_level.group; )* >
+
+  <!ELEMENT nl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl1l
     %coreattrs;
   >
-  
-  <!ELEMENT nl1p ( %inline_level.group; )* >
+
+  <!ELEMENT nl1p ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl1p
     %coreattrs;
   >
-  
-  <!ELEMENT nl1pl ( %inline_level.group; )* >
+
+  <!ELEMENT nl1pl ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl1pl
     %coreattrs;
   >
-  
-  <!ELEMENT nl1s ( %inline_level.group; )* >
+
+  <!ELEMENT nl1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl1s
     %coreattrs;
   >
-  
-  <!ELEMENT nl2 ( %inline_level.group; )* >
+
+  <!ELEMENT nl2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl2
     %coreattrs;
   >
-  
-  <!ELEMENT nl2f ( %inline_level.group; )* >
+
+  <!ELEMENT nl2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl2f
     %coreattrs;
   >
-  
-  <!ELEMENT nl2l ( %inline_level.group; )* >
+
+  <!ELEMENT nl2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl2l
     %coreattrs;
   >
-  
-  <!ELEMENT nl2p ( %inline_level.group; )* >
+
+  <!ELEMENT nl2p ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl2p
     %coreattrs;
   >
-  
-  <!ELEMENT nl2s ( %inline_level.group; )* >
+
+  <!ELEMENT nl2s ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl2s
     %coreattrs;
   >
-  
-  <!ELEMENT nl3 ( %inline_level.group; )* >
+
+  <!ELEMENT nl3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl3
     %coreattrs;
   >
-  
-  <!ELEMENT nl3f ( %inline_level.group; )* >
+
+  <!ELEMENT nl3f ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl3f
     %coreattrs;
   >
-  
-  <!ELEMENT nl3l ( %inline_level.group; )* >
+
+  <!ELEMENT nl3l ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl3l
     %coreattrs;
   >
-  
-  <!ELEMENT nl3p ( %inline_level.group; )* >
+
+  <!ELEMENT nl3p ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl3p
     %coreattrs;
   >
-  
-  <!ELEMENT nl3s ( %inline_level.group; )* >
+
+  <!ELEMENT nl3s ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl3s
     %coreattrs;
   >
-  
-  <!ELEMENT nl4 ( %inline_level.group; )* >
+
+  <!ELEMENT nl4 ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl4
     %coreattrs;
   >
-  
-  <!ELEMENT nl4f ( %inline_level.group; )* >
+
+  <!ELEMENT nl4f ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl4f
     %coreattrs;
   >
-  
-  <!ELEMENT nl4l ( %inline_level.group; )* >
+
+  <!ELEMENT nl4l ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl4l
     %coreattrs;
   >
-  
-  <!ELEMENT nl4p ( %inline_level.group; )* >
+
+  <!ELEMENT nl4p ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl4p
     %coreattrs;
   >
-  
-  <!ELEMENT nl4s ( %inline_level.group; )* >
+
+  <!ELEMENT nl4s ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl4s
     %coreattrs;
   >
-  
-  <!ELEMENT nl5 ( %inline_level.group; )* >
+
+  <!ELEMENT nl5 ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl5
     %coreattrs;
   >
-  
-  <!ELEMENT nl5f ( %inline_level.group; )* >
+
+  <!ELEMENT nl5f ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl5f
     %coreattrs;
   >
-  
-  <!ELEMENT nl5l ( %inline_level.group; )* >
+
+  <!ELEMENT nl5l ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl5l
     %coreattrs;
   >
-  
-  <!ELEMENT nl5p ( %inline_level.group; )* >
+
+  <!ELEMENT nl5p ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl5p
     %coreattrs;
   >
-  
-  <!ELEMENT nl5s ( %inline_level.group; )* >
+
+  <!ELEMENT nl5s ( #PCDATA | %character_styles; )* >
   <!ATTLIST nl5s
     %coreattrs;
   >
-  
-  <!ELEMENT nlf ( %inline_level.group; )* >
+
+  <!ELEMENT nlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST nlf
     %coreattrs;
   >
-  
-  <!ELEMENT nlh ( %inline_level.group; )* >
+
+  <!ELEMENT nlh ( #PCDATA | %character_styles; )* >
   <!ATTLIST nlh
     %coreattrs;
   >
-  
-  <!ELEMENT nll ( %inline_level.group; )* >
+
+  <!ELEMENT nll ( #PCDATA | %character_styles; )* >
   <!ATTLIST nll
     %coreattrs;
   >
-  
-  <!ELEMENT nlp ( %inline_level.group; )* >
+
+  <!ELEMENT nlp ( #PCDATA | %character_styles; )* >
   <!ATTLIST nlp
     %coreattrs;
   >
-  
-  <!ELEMENT nlpl ( %inline_level.group; )* >
+
+  <!ELEMENT nlpl ( #PCDATA | %character_styles; )* >
   <!ATTLIST nlpl
     %coreattrs;
   >
-  
-  <!ELEMENT nls ( %inline_level.group; )* >
+
+  <!ELEMENT nls ( #PCDATA | %character_styles; )* >
   <!ATTLIST nls
     %coreattrs;
   >
-  
-  <!ELEMENT ntbq ( %inline_level.group; )* >
+
+  <!ELEMENT ntbq ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntbq
     %coreattrs;
   >
-  
-  <!ELEMENT ntbqf ( %inline_level.group; )* >
+
+  <!ELEMENT ntbqf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntbqf
     %coreattrs;
   >
-  
-  <!ELEMENT ntbql ( %inline_level.group; )* >
+
+  <!ELEMENT ntbql ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntbql
     %coreattrs;
   >
-  
-  <!ELEMENT ntbqs ( %inline_level.group; )* >
+
+  <!ELEMENT ntbqs ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntbqs
     %coreattrs;
   >
-  
-  <!ELEMENT ntcon ( %inline_level.group; )* >
+
+  <!ELEMENT ntcon ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntcon
     %coreattrs;
   >
-  
-  <!ELEMENT nteq ( %inline_level.group; )* >
+
+  <!ELEMENT nteq ( #PCDATA | %character_styles; )* >
   <!ATTLIST nteq
     %coreattrs;
   >
-  
-  <!ELEMENT ntnl ( %inline_level.group; )* >
+
+  <!ELEMENT ntnl ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntnl
     %coreattrs;
   >
-  
-  <!ELEMENT ntnlf ( %inline_level.group; )* >
+
+  <!ELEMENT ntnlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntnlf
     %coreattrs;
   >
-  
-  <!ELEMENT ntnll ( %inline_level.group; )* >
+
+  <!ELEMENT ntnll ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntnll
     %coreattrs;
   >
-  
-  <!ELEMENT ntsl ( %inline_level.group; )* >
+
+  <!ELEMENT ntsl ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntsl
     %coreattrs;
   >
-  
-  <!ELEMENT ntslf ( %inline_level.group; )* >
+
+  <!ELEMENT ntslf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntslf
     %coreattrs;
   >
-  
-  <!ELEMENT ntsll ( %inline_level.group; )* >
+
+  <!ELEMENT ntsll ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntsll
     %coreattrs;
   >
-  
-  <!ELEMENT nttd ( %inline_level.group; )* >
+
+  <!ELEMENT nttd ( #PCDATA | %character_styles; )* >
   <!ATTLIST nttd
     %coreattrs;
   >
-  
-  <!ELEMENT ntul ( %inline_level.group; )* >
+
+  <!ELEMENT ntul ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntul
     %coreattrs;
   >
-  
-  <!ELEMENT ntulf ( %inline_level.group; )* >
+
+  <!ELEMENT ntulf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntulf
     %coreattrs;
   >
-  
-  <!ELEMENT ntull ( %inline_level.group; )* >
+
+  <!ELEMENT ntull ( #PCDATA | %character_styles; )* >
   <!ATTLIST ntull
     %coreattrs;
   >
-  
-  <!ELEMENT opt ( %inline_level.group; )* >
+
+  <!ELEMENT opt ( #PCDATA | %character_styles; )* >
   <!ATTLIST opt
     %coreattrs;
   >
-  
-  <!ELEMENT p ( %inline_level.group; )* >
+
+  <!ELEMENT p ( #PCDATA | %character_styles; )* >
   <!ATTLIST p
     %coreattrs;
   >
-  
-  <!ELEMENT paft ( %inline_level.group; )* >
+
+  <!ELEMENT paft ( #PCDATA | %character_styles; )* >
   <!ATTLIST paft
     %coreattrs;
   >
-  
-  <!ELEMENT patr ( %inline_level.group; )* >
+
+  <!ELEMENT patr ( #PCDATA | %character_styles; )* >
   <!ATTLIST patr
     %coreattrs;
   >
-  
-  <!ELEMENT patr1 ( %inline_level.group; )* >
+
+  <!ELEMENT patr1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST patr1
     %coreattrs;
   >
-  
-  <!ELEMENT pcon ( %inline_level.group; )* >
+
+  <!ELEMENT pcon ( #PCDATA | %character_styles; )* >
   <!ATTLIST pcon
     %coreattrs;
   >
-  
-  <!ELEMENT pcust1 ( %inline_level.group; )* >
+
+  <!ELEMENT pcust1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST pcust1
     %coreattrs;
   >
-  
-  <!ELEMENT pcust2 ( %inline_level.group; )* >
+
+  <!ELEMENT pcust2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST pcust2
     %coreattrs;
   >
-  
-  <!ELEMENT pcust3 ( %inline_level.group; )* >
+
+  <!ELEMENT pcust3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST pcust3
     %coreattrs;
   >
-  
-  <!ELEMENT pf ( %inline_level.group; )* >
+
+  <!ELEMENT pf ( #PCDATA | %character_styles; )* >
   <!ATTLIST pf
     %coreattrs;
   >
-  
-  <!ELEMENT pn ( %inline_level.group; )* >
+
+  <!ELEMENT pn ( #PCDATA | %character_styles; )* >
   <!ATTLIST pn
     %coreattrs;
   >
-  
-  <!ELEMENT ps ( %inline_level.group; )* >
+
+  <!ELEMENT ps ( #PCDATA | %character_styles; )* >
   <!ATTLIST ps
     %coreattrs;
   >
-  
-  <!ELEMENT psec ( %inline_level.group; )* >
+
+  <!ELEMENT psec ( #PCDATA | %character_styles; )* >
   <!ATTLIST psec
     %coreattrs;
   >
-  
-  <!ELEMENT psec1 ( %inline_level.group; )* >
+
+  <!ELEMENT psec1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST psec1
     %coreattrs;
   >
-  
-  <!ELEMENT pt ( %inline_level.group; )* >
+
+  <!ELEMENT pt ( #PCDATA | %character_styles; )* >
   <!ATTLIST pt
     %coreattrs;
   >
-  
-  <!ELEMENT qu ( %inline_level.group; )* >
+
+  <!ELEMENT qu ( #PCDATA | %character_styles; )* >
   <!ATTLIST qu
     %coreattrs;
   >
-  
-  <!ELEMENT quf ( %inline_level.group; )* >
+
+  <!ELEMENT quf ( #PCDATA | %character_styles; )* >
   <!ATTLIST quf
     %coreattrs;
   >
-  
-  <!ELEMENT quh ( %inline_level.group; )* >
+
+  <!ELEMENT quh ( #PCDATA | %character_styles; )* >
   <!ATTLIST quh
     %coreattrs;
   >
-  
-  <!ELEMENT quot ( %inline_level.group; )* >
+
+  <!ELEMENT quot ( #PCDATA | %character_styles; )* >
   <!ATTLIST quot
     %coreattrs;
   >
-  
-  <!ELEMENT quotf ( %inline_level.group; )* >
+
+  <!ELEMENT quotf ( #PCDATA | %character_styles; )* >
   <!ATTLIST quotf
     %coreattrs;
   >
-  
-  <!ELEMENT quotl ( %inline_level.group; )* >
+
+  <!ELEMENT quotl ( #PCDATA | %character_styles; )* >
   <!ATTLIST quotl
     %coreattrs;
   >
-  
-  <!ELEMENT quots ( %inline_level.group; )* >
+
+  <!ELEMENT quots ( #PCDATA | %character_styles; )* >
   <!ATTLIST quots
     %coreattrs;
   >
-  
-  <!ELEMENT quott ( %inline_level.group; )* >
+
+  <!ELEMENT quott ( #PCDATA | %character_styles; )* >
   <!ATTLIST quott
     %coreattrs;
   >
-  
-  <!ELEMENT rb ( %inline_level.group; )* >
+
+  <!ELEMENT rb ( #PCDATA | %character_styles; )* >
   <!ATTLIST rb
     %coreattrs;
   >
-  
-  <!ELEMENT rbc ( %inline_level.group; )* >
+
+  <!ELEMENT rbc ( #PCDATA | %character_styles; )* >
   <!ATTLIST rbc
     %coreattrs;
   >
-  
-  <!ELEMENT rbi ( %inline_level.group; )* >
+
+  <!ELEMENT rbi ( #PCDATA | %character_styles; )* >
   <!ATTLIST rbi
     %coreattrs;
   >
-  
-  <!ELEMENT rf ( %inline_level.group; )* >
+
+  <!ELEMENT rf ( #PCDATA | %character_styles; )* >
   <!ATTLIST rf
     %coreattrs;
   >
-  
-  <!ELEMENT rf1 ( %inline_level.group; )* >
+
+  <!ELEMENT rf1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rf1
     %coreattrs;
   >
-  
-  <!ELEMENT rf2 ( %inline_level.group; )* >
+
+  <!ELEMENT rf2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rf2
     %coreattrs;
   >
-  
-  <!ELEMENT rp ( %inline_level.group; )* >
+
+  <!ELEMENT rp ( #PCDATA | %character_styles; )* >
   <!ATTLIST rp
     %coreattrs;
   >
-  
-  <!ELEMENT rp1 ( %inline_level.group; )* >
+
+  <!ELEMENT rp1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rp1
     %coreattrs;
   >
-  
-  <!ELEMENT rp1f ( %inline_level.group; )* >
+
+  <!ELEMENT rp1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST rp1f
     %coreattrs;
   >
-  
-  <!ELEMENT rp1l ( %inline_level.group; )* >
+
+  <!ELEMENT rp1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST rp1l
     %coreattrs;
   >
-  
-  <!ELEMENT rp1y ( %inline_level.group; )* >
+
+  <!ELEMENT rp1y ( #PCDATA | %character_styles; )* >
   <!ATTLIST rp1y
     %coreattrs;
   >
-  
-  <!ELEMENT rpah ( %inline_level.group; )* >
+
+  <!ELEMENT rpah ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpah
     %coreattrs;
   >
-  
-  <!ELEMENT rpbh ( %inline_level.group; )* >
+
+  <!ELEMENT rpbh ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpbh
     %coreattrs;
   >
-  
-  <!ELEMENT rpch ( %inline_level.group; )* >
+
+  <!ELEMENT rpch ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpch
     %coreattrs;
   >
-  
-  <!ELEMENT rpf ( %inline_level.group; )* >
+
+  <!ELEMENT rpf ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpf
     %coreattrs;
   >
-  
-  <!ELEMENT rpg ( %inline_level.group; )* >
+
+  <!ELEMENT rpg ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpg
     %coreattrs;
   >
-  
-  <!ELEMENT rpg1 ( %inline_level.group; )* >
+
+  <!ELEMENT rpg1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpg1
     %coreattrs;
   >
-  
-  <!ELEMENT rph ( %inline_level.group; )* >
+
+  <!ELEMENT rph ( #PCDATA | %character_styles; )* >
   <!ATTLIST rph
     %coreattrs;
   >
-  
-  <!ELEMENT rph1 ( %inline_level.group; )* >
+
+  <!ELEMENT rph1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rph1
     %coreattrs;
   >
-  
-  <!ELEMENT rphn ( %inline_level.group; )* >
+
+  <!ELEMENT rphn ( #PCDATA | %character_styles; )* >
   <!ATTLIST rphn
     %coreattrs;
   >
-  
-  <!ELEMENT rpil ( %inline_level.group; )* >
+
+  <!ELEMENT rpil ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpil
     %coreattrs;
   >
-  
-  <!ELEMENT rpil1 ( %inline_level.group; )* >
+
+  <!ELEMENT rpil1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpil1
     %coreattrs;
   >
-  
-  <!ELEMENT rpil1f ( %inline_level.group; )* >
+
+  <!ELEMENT rpil1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpil1f
     %coreattrs;
   >
-  
-  <!ELEMENT rpil1l ( %inline_level.group; )* >
+
+  <!ELEMENT rpil1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpil1l
     %coreattrs;
   >
-  
-  <!ELEMENT rpil1s ( %inline_level.group; )* >
+
+  <!ELEMENT rpil1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpil1s
     %coreattrs;
   >
-  
-  <!ELEMENT rpilf ( %inline_level.group; )* >
+
+  <!ELEMENT rpilf ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpilf
     %coreattrs;
   >
-  
-  <!ELEMENT rpill ( %inline_level.group; )* >
+
+  <!ELEMENT rpill ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpill
     %coreattrs;
   >
-  
-  <!ELEMENT rpils ( %inline_level.group; )* >
+
+  <!ELEMENT rpils ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpils
     %coreattrs;
   >
-  
-  <!ELEMENT rpl ( %inline_level.group; )* >
+
+  <!ELEMENT rpl ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpl
     %coreattrs;
   >
-  
-  <!ELEMENT rpn ( %inline_level.group; )* >
+
+  <!ELEMENT rpn ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpn
     %coreattrs;
   >
-  
-  <!ELEMENT rpn1 ( %inline_level.group; )* >
+
+  <!ELEMENT rpn1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpn1
     %coreattrs;
   >
-  
-  <!ELEMENT rpnut ( %inline_level.group; )* >
+
+  <!ELEMENT rpnut ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpnut
     %coreattrs;
   >
-  
-  <!ELEMENT rpnut1 ( %inline_level.group; )* >
+
+  <!ELEMENT rpnut1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpnut1
     %coreattrs;
   >
-  
-  <!ELEMENT rpt ( %inline_level.group; )* >
+
+  <!ELEMENT rpt ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpt
     %coreattrs;
   >
-  
-  <!ELEMENT rpt1 ( %inline_level.group; )* >
+
+  <!ELEMENT rpt1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpt1
     %coreattrs;
   >
-  
-  <!ELEMENT rpv ( %inline_level.group; )* >
+
+  <!ELEMENT rpv ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpv
     %coreattrs;
   >
-  
-  <!ELEMENT rpv1 ( %inline_level.group; )* >
+
+  <!ELEMENT rpv1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpv1
     %coreattrs;
   >
-  
-  <!ELEMENT rpv1f ( %inline_level.group; )* >
+
+  <!ELEMENT rpv1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpv1f
     %coreattrs;
   >
-  
-  <!ELEMENT rpv1h ( %inline_level.group; )* >
+
+  <!ELEMENT rpv1h ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpv1h
     %coreattrs;
   >
-  
-  <!ELEMENT rpv1l ( %inline_level.group; )* >
+
+  <!ELEMENT rpv1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpv1l
     %coreattrs;
   >
-  
-  <!ELEMENT rpvf ( %inline_level.group; )* >
+
+  <!ELEMENT rpvf ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpvf
     %coreattrs;
   >
-  
-  <!ELEMENT rpvh ( %inline_level.group; )* >
+
+  <!ELEMENT rpvh ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpvh
     %coreattrs;
   >
-  
-  <!ELEMENT rpvl ( %inline_level.group; )* >
+
+  <!ELEMENT rpvl ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpvl
     %coreattrs;
   >
-  
-  <!ELEMENT rpy ( %inline_level.group; )* >
+
+  <!ELEMENT rpy ( #PCDATA | %character_styles; )* >
   <!ATTLIST rpy
     %coreattrs;
   >
-  
-  <!ELEMENT rv ( %inline_level.group; )* >
+
+  <!ELEMENT rv ( #PCDATA | %character_styles; )* >
   <!ATTLIST rv
     %coreattrs;
   >
-  
-  <!ELEMENT rvd ( %inline_level.group; )* >
+
+  <!ELEMENT rvd ( #PCDATA | %character_styles; )* >
   <!ATTLIST rvd
     %coreattrs;
   >
-  
-  <!ELEMENT rvh ( %inline_level.group; )* >
+
+  <!ELEMENT rvh ( #PCDATA | %character_styles; )* >
   <!ATTLIST rvh
     %coreattrs;
   >
-  
-  <!ELEMENT rvt ( %inline_level.group; )* >
+
+  <!ELEMENT rvt ( #PCDATA | %character_styles; )* >
   <!ATTLIST rvt
     %coreattrs;
   >
-  
-  <!ELEMENT sb ( %inline_level.group; )* >
+
+  <!ELEMENT sb ( #PCDATA | %character_styles; )* >
   <!ATTLIST sb
     %coreattrs;
   >
-  
-  <!ELEMENT sb1 ( %inline_level.group; )* >
+
+  <!ELEMENT sb1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sb1
     %coreattrs;
   >
-  
-  <!ELEMENT sb1f ( %inline_level.group; )* >
+
+  <!ELEMENT sb1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sb1f
     %coreattrs;
   >
-  
-  <!ELEMENT sb1h ( %inline_level.group; )* >
+
+  <!ELEMENT sb1h ( #PCDATA | %character_styles; )* >
   <!ATTLIST sb1h
     %coreattrs;
   >
-  
-  <!ELEMENT sb1l ( %inline_level.group; )* >
+
+  <!ELEMENT sb1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sb1l
     %coreattrs;
   >
-  
-  <!ELEMENT sb1t ( %inline_level.group; )* >
+
+  <!ELEMENT sb1t ( #PCDATA | %character_styles; )* >
   <!ATTLIST sb1t
     %coreattrs;
   >
-  
-  <!ELEMENT sbaft ( %inline_level.group; )* >
+
+  <!ELEMENT sbaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbaft
     %coreattrs;
   >
-  
-  <!ELEMENT sbah ( %inline_level.group; )* >
+
+  <!ELEMENT sbah ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbah
     %coreattrs;
   >
-  
-  <!ELEMENT sbahaft ( %inline_level.group; )* >
+
+  <!ELEMENT sbahaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbahaft
     %coreattrs;
   >
-  
-  <!ELEMENT sbbh ( %inline_level.group; )* >
+
+  <!ELEMENT sbbh ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbbh
     %coreattrs;
   >
-  
-  <!ELEMENT sbbhaft ( %inline_level.group; )* >
+
+  <!ELEMENT sbbhaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbbhaft
     %coreattrs;
   >
-  
-  <!ELEMENT sbbq ( %inline_level.group; )* >
+
+  <!ELEMENT sbbq ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbbq
     %coreattrs;
   >
-  
-  <!ELEMENT sbbqaft ( %inline_level.group; )* >
+
+  <!ELEMENT sbbqaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbbqaft
     %coreattrs;
   >
-  
-  <!ELEMENT sbbqf ( %inline_level.group; )* >
+
+  <!ELEMENT sbbqf ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbbqf
     %coreattrs;
   >
-  
-  <!ELEMENT sbbql ( %inline_level.group; )* >
+
+  <!ELEMENT sbbql ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbbql
     %coreattrs;
   >
-  
-  <!ELEMENT sbbqs ( %inline_level.group; )* >
+
+  <!ELEMENT sbbqs ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbbqs
     %coreattrs;
   >
-  
-  <!ELEMENT sbcon ( %inline_level.group; )* >
+
+  <!ELEMENT sbcon ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbcon
     %coreattrs;
   >
-  
-  <!ELEMENT sbf ( %inline_level.group; )* >
+
+  <!ELEMENT sbf ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbf
     %coreattrs;
   >
-  
-  <!ELEMENT sbh ( %inline_level.group; )* >
+
+  <!ELEMENT sbh ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbh
     %coreattrs;
   >
-  
-  <!ELEMENT sbl ( %inline_level.group; )* >
+
+  <!ELEMENT sbl ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbl
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl1 ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl1
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl1f ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl1f
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl1l ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl1l
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl1p ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl1p ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl1p
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl1s ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl1s
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl2 ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl2
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl2f ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl2f
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl2l ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl2l
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl2p ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl2p ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl2p
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl2s ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl2s ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl2s
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl3 ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl3
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl3f ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl3f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl3f
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl3l ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl3l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl3l
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl4 ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl4 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl4
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl4f ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl4f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl4f
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl4l ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl4l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl4l
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl5 ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl5 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl5
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl5f ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl5f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl5f
     %coreattrs;
   >
-  
-  <!ELEMENT sbnl5l ( %inline_level.group; )* >
+
+  <!ELEMENT sbnl5l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnl5l
     %coreattrs;
   >
-  
-  <!ELEMENT sbnlf ( %inline_level.group; )* >
+
+  <!ELEMENT sbnlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnlf
     %coreattrs;
   >
-  
-  <!ELEMENT sbnll ( %inline_level.group; )* >
+
+  <!ELEMENT sbnll ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnll
     %coreattrs;
   >
-  
-  <!ELEMENT sbnlp ( %inline_level.group; )* >
+
+  <!ELEMENT sbnlp ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnlp
     %coreattrs;
   >
-  
-  <!ELEMENT sbnls ( %inline_level.group; )* >
+
+  <!ELEMENT sbnls ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbnls
     %coreattrs;
   >
-  
-  <!ELEMENT sbo ( %inline_level.group; )* >
+
+  <!ELEMENT sbo ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbo
     %coreattrs;
   >
-  
-  <!ELEMENT sbs ( %inline_level.group; )* >
+
+  <!ELEMENT sbs ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbs
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl1 ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl1
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl1f ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl1f
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl1l ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl1l
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl1s ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl1s
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl2 ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl2
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl2f ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl2f
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl2l ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl2l
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl2s ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl2s ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl2s
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl3 ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl3
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl3f ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl3f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl3f
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl3l ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl3l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl3l
     %coreattrs;
   >
-  
-  <!ELEMENT sbsl3s ( %inline_level.group; )* >
+
+  <!ELEMENT sbsl3s ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsl3s
     %coreattrs;
   >
-  
-  <!ELEMENT sbslf ( %inline_level.group; )* >
+
+  <!ELEMENT sbslf ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbslf
     %coreattrs;
   >
-  
-  <!ELEMENT sbsli ( %inline_level.group; )* >
+
+  <!ELEMENT sbsli ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsli
     %coreattrs;
   >
-  
-  <!ELEMENT sbslif ( %inline_level.group; )* >
+
+  <!ELEMENT sbslif ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbslif
     %coreattrs;
   >
-  
-  <!ELEMENT sbslil ( %inline_level.group; )* >
+
+  <!ELEMENT sbslil ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbslil
     %coreattrs;
   >
-  
-  <!ELEMENT sbsll ( %inline_level.group; )* >
+
+  <!ELEMENT sbsll ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsll
     %coreattrs;
   >
-  
-  <!ELEMENT sbsls ( %inline_level.group; )* >
+
+  <!ELEMENT sbsls ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbsls
     %coreattrs;
   >
-  
-  <!ELEMENT sbslt ( %inline_level.group; )* >
+
+  <!ELEMENT sbslt ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbslt
     %coreattrs;
   >
-  
-  <!ELEMENT sbt ( %inline_level.group; )* >
+
+  <!ELEMENT sbt ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbt
     %coreattrs;
   >
-  
-  <!ELEMENT sbul ( %inline_level.group; )* >
+
+  <!ELEMENT sbul ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul
     %coreattrs;
   >
-  
-  <!ELEMENT sbul1 ( %inline_level.group; )* >
+
+  <!ELEMENT sbul1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul1
     %coreattrs;
   >
-  
-  <!ELEMENT sbul1f ( %inline_level.group; )* >
+
+  <!ELEMENT sbul1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul1f
     %coreattrs;
   >
-  
-  <!ELEMENT sbul1l ( %inline_level.group; )* >
+
+  <!ELEMENT sbul1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul1l
     %coreattrs;
   >
-  
-  <!ELEMENT sbul1p ( %inline_level.group; )* >
+
+  <!ELEMENT sbul1p ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul1p
     %coreattrs;
   >
-  
-  <!ELEMENT sbul1s ( %inline_level.group; )* >
+
+  <!ELEMENT sbul1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul1s
     %coreattrs;
   >
-  
-  <!ELEMENT sbul2 ( %inline_level.group; )* >
+
+  <!ELEMENT sbul2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul2
     %coreattrs;
   >
-  
-  <!ELEMENT sbul2f ( %inline_level.group; )* >
+
+  <!ELEMENT sbul2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul2f
     %coreattrs;
   >
-  
-  <!ELEMENT sbul2l ( %inline_level.group; )* >
+
+  <!ELEMENT sbul2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul2l
     %coreattrs;
   >
-  
-  <!ELEMENT sbul2p ( %inline_level.group; )* >
+
+  <!ELEMENT sbul2p ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul2p
     %coreattrs;
   >
-  
-  <!ELEMENT sbul2s ( %inline_level.group; )* >
+
+  <!ELEMENT sbul2s ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbul2s
     %coreattrs;
   >
-  
-  <!ELEMENT sbulf ( %inline_level.group; )* >
+
+  <!ELEMENT sbulf ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbulf
     %coreattrs;
   >
-  
-  <!ELEMENT sbull ( %inline_level.group; )* >
+
+  <!ELEMENT sbull ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbull
     %coreattrs;
   >
-  
-  <!ELEMENT sbulp ( %inline_level.group; )* >
+
+  <!ELEMENT sbulp ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbulp
     %coreattrs;
   >
-  
-  <!ELEMENT sbuls ( %inline_level.group; )* >
+
+  <!ELEMENT sbuls ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbuls
     %coreattrs;
   >
-  
-  <!ELEMENT sec ( %inline_level.group; )* >
+
+  <!ELEMENT sec ( #PCDATA | %character_styles; )* >
   <!ATTLIST sec
     %coreattrs;
   >
-  
-  <!ELEMENT secbot ( %inline_level.group; )* >
+
+  <!ELEMENT secbot ( #PCDATA | %character_styles; )* >
   <!ATTLIST secbot
     %coreattrs;
   >
-  
-  <!ELEMENT sectop ( %inline_level.group; )* >
+
+  <!ELEMENT sectop ( #PCDATA | %character_styles; )* >
   <!ATTLIST sectop
     %coreattrs;
   >
-  
-  <!ELEMENT ser ( %inline_level.group; )* >
+
+  <!ELEMENT ser ( #PCDATA | %character_styles; )* >
   <!ATTLIST ser
     %coreattrs;
   >
-  
-  <!ELEMENT ser1 ( %inline_level.group; )* >
+
+  <!ELEMENT ser1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ser1
     %coreattrs;
   >
-  
-  <!ELEMENT ser2 ( %inline_level.group; )* >
+
+  <!ELEMENT ser2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ser2
     %coreattrs;
   >
-  
-  <!ELEMENT seraft ( %inline_level.group; )* >
+
+  <!ELEMENT seraft ( #PCDATA | %character_styles; )* >
   <!ATTLIST seraft
     %coreattrs;
   >
-  
-  <!ELEMENT serah ( %inline_level.group; )* >
+
+  <!ELEMENT serah ( #PCDATA | %character_styles; )* >
   <!ATTLIST serah
     %coreattrs;
   >
-  
-  <!ELEMENT serahaft ( %inline_level.group; )* >
+
+  <!ELEMENT serahaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST serahaft
     %coreattrs;
   >
-  
-  <!ELEMENT serau ( %inline_level.group; )* >
+
+  <!ELEMENT serau ( #PCDATA | %character_styles; )* >
   <!ATTLIST serau
     %coreattrs;
   >
-  
-  <!ELEMENT serbh ( %inline_level.group; )* >
+
+  <!ELEMENT serbh ( #PCDATA | %character_styles; )* >
   <!ATTLIST serbh
     %coreattrs;
   >
-  
-  <!ELEMENT serf ( %inline_level.group; )* >
+
+  <!ELEMENT serf ( #PCDATA | %character_styles; )* >
   <!ATTLIST serf
     %coreattrs;
   >
-  
-  <!ELEMENT serp ( %inline_level.group; )* >
+
+  <!ELEMENT serp ( #PCDATA | %character_styles; )* >
   <!ATTLIST serp
     %coreattrs;
   >
-  
-  <!ELEMENT serpf ( %inline_level.group; )* >
+
+  <!ELEMENT serpf ( #PCDATA | %character_styles; )* >
   <!ATTLIST serpf
     %coreattrs;
   >
-  
-  <!ELEMENT sers ( %inline_level.group; )* >
+
+  <!ELEMENT sers ( #PCDATA | %character_styles; )* >
   <!ATTLIST sers
     %coreattrs;
   >
-  
-  <!ELEMENT sert ( %inline_level.group; )* >
+
+  <!ELEMENT sert ( #PCDATA | %character_styles; )* >
   <!ATTLIST sert
     %coreattrs;
   >
-  
-  <!ELEMENT sh ( %inline_level.group; )* >
+
+  <!ELEMENT sh ( #PCDATA | %character_styles; )* >
   <!ATTLIST sh
     %coreattrs;
   >
-  
-  <!ELEMENT sl ( %inline_level.group; )* >
+
+  <!ELEMENT sl ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl
     %coreattrs;
   >
-  
-  <!ELEMENT sl1 ( %inline_level.group; )* >
+
+  <!ELEMENT sl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl1
     %coreattrs;
   >
-  
-  <!ELEMENT sl1f ( %inline_level.group; )* >
+
+  <!ELEMENT sl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl1f
     %coreattrs;
   >
-  
-  <!ELEMENT sl1l ( %inline_level.group; )* >
+
+  <!ELEMENT sl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl1l
     %coreattrs;
   >
-  
-  <!ELEMENT sl2 ( %inline_level.group; )* >
+
+  <!ELEMENT sl2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl2
     %coreattrs;
   >
-  
-  <!ELEMENT sl2f ( %inline_level.group; )* >
+
+  <!ELEMENT sl2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl2f
     %coreattrs;
   >
-  
-  <!ELEMENT sl2l ( %inline_level.group; )* >
+
+  <!ELEMENT sl2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl2l
     %coreattrs;
   >
-  
-  <!ELEMENT sl3 ( %inline_level.group; )* >
+
+  <!ELEMENT sl3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl3
     %coreattrs;
   >
-  
-  <!ELEMENT sl3f ( %inline_level.group; )* >
+
+  <!ELEMENT sl3f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl3f
     %coreattrs;
   >
-  
-  <!ELEMENT sl3l ( %inline_level.group; )* >
+
+  <!ELEMENT sl3l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl3l
     %coreattrs;
   >
-  
-  <!ELEMENT sl4 ( %inline_level.group; )* >
+
+  <!ELEMENT sl4 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl4
     %coreattrs;
   >
-  
-  <!ELEMENT sl4f ( %inline_level.group; )* >
+
+  <!ELEMENT sl4f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl4f
     %coreattrs;
   >
-  
-  <!ELEMENT sl4l ( %inline_level.group; )* >
+
+  <!ELEMENT sl4l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl4l
     %coreattrs;
   >
-  
-  <!ELEMENT sl5 ( %inline_level.group; )* >
+
+  <!ELEMENT sl5 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl5
     %coreattrs;
   >
-  
-  <!ELEMENT sl5f ( %inline_level.group; )* >
+
+  <!ELEMENT sl5f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl5f
     %coreattrs;
   >
-  
-  <!ELEMENT sl5l ( %inline_level.group; )* >
+
+  <!ELEMENT sl5l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl5l
     %coreattrs;
   >
-  
-  <!ELEMENT sl6 ( %inline_level.group; )* >
+
+  <!ELEMENT sl6 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl6
     %coreattrs;
   >
-  
-  <!ELEMENT sl6f ( %inline_level.group; )* >
+
+  <!ELEMENT sl6f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl6f
     %coreattrs;
   >
-  
-  <!ELEMENT sl6l ( %inline_level.group; )* >
+
+  <!ELEMENT sl6l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl6l
     %coreattrs;
   >
-  
-  <!ELEMENT sl7 ( %inline_level.group; )* >
+
+  <!ELEMENT sl7 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl7
     %coreattrs;
   >
-  
-  <!ELEMENT sl7f ( %inline_level.group; )* >
+
+  <!ELEMENT sl7f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl7f
     %coreattrs;
   >
-  
-  <!ELEMENT sl7l ( %inline_level.group; )* >
+
+  <!ELEMENT sl7l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl7l
     %coreattrs;
   >
-  
-  <!ELEMENT sl8 ( %inline_level.group; )* >
+
+  <!ELEMENT sl8 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl8
     %coreattrs;
   >
-  
-  <!ELEMENT sl8f ( %inline_level.group; )* >
+
+  <!ELEMENT sl8f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl8f
     %coreattrs;
   >
-  
-  <!ELEMENT sl8l ( %inline_level.group; )* >
+
+  <!ELEMENT sl8l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl8l
     %coreattrs;
   >
-  
-  <!ELEMENT sl9 ( %inline_level.group; )* >
+
+  <!ELEMENT sl9 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl9
     %coreattrs;
   >
-  
-  <!ELEMENT sl9f ( %inline_level.group; )* >
+
+  <!ELEMENT sl9f ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl9f
     %coreattrs;
   >
-  
-  <!ELEMENT sl9l ( %inline_level.group; )* >
+
+  <!ELEMENT sl9l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl9l
     %coreattrs;
   >
-  
-  <!ELEMENT slf ( %inline_level.group; )* >
+
+  <!ELEMENT slf ( #PCDATA | %character_styles; )* >
   <!ATTLIST slf
     %coreattrs;
   >
-  
-  <!ELEMENT slh ( %inline_level.group; )* >
+
+  <!ELEMENT slh ( #PCDATA | %character_styles; )* >
   <!ATTLIST slh
     %coreattrs;
   >
-  
-  <!ELEMENT sli ( %inline_level.group; )* >
+
+  <!ELEMENT sli ( #PCDATA | %character_styles; )* >
   <!ATTLIST sli
     %coreattrs;
   >
-  
-  <!ELEMENT slif ( %inline_level.group; )* >
+
+  <!ELEMENT slif ( #PCDATA | %character_styles; )* >
   <!ATTLIST slif
     %coreattrs;
   >
-  
-  <!ELEMENT slil ( %inline_level.group; )* >
+
+  <!ELEMENT slil ( #PCDATA | %character_styles; )* >
   <!ATTLIST slil
     %coreattrs;
   >
-  
-  <!ELEMENT sll ( %inline_level.group; )* >
+
+  <!ELEMENT sll ( #PCDATA | %character_styles; )* >
   <!ATTLIST sll
     %coreattrs;
   >
-  
-  <!ELEMENT sls ( %inline_level.group; )* >
+
+  <!ELEMENT sls ( #PCDATA | %character_styles; )* >
   <!ATTLIST sls
     %coreattrs;
   >
-  
-  <!ELEMENT slt ( %inline_level.group; )* >
+
+  <!ELEMENT slt ( #PCDATA | %character_styles; )* >
   <!ATTLIST slt
     %coreattrs;
   >
-  
-  <!ELEMENT st ( %inline_level.group; )* >
+
+  <!ELEMENT st ( #PCDATA | %character_styles; )* >
   <!ATTLIST st
     %coreattrs;
   >
-  
-  <!ELEMENT stf ( %inline_level.group; )* >
+
+  <!ELEMENT stf ( #PCDATA | %character_styles; )* >
   <!ATTLIST stf
     %coreattrs;
   >
-  
-  <!ELEMENT sth ( %inline_level.group; )* >
+
+  <!ELEMENT sth ( #PCDATA | %character_styles; )* >
   <!ATTLIST sth
     %coreattrs;
   >
-  
-  <!ELEMENT sth1 ( %inline_level.group; )* >
+
+  <!ELEMENT sth1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sth1
     %coreattrs;
   >
-  
-  <!ELEMENT sth2 ( %inline_level.group; )* >
+
+  <!ELEMENT sth2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sth2
     %coreattrs;
   >
-  
-  <!ELEMENT stl ( %inline_level.group; )* >
+
+  <!ELEMENT stl ( #PCDATA | %character_styles; )* >
   <!ATTLIST stl
     %coreattrs;
   >
-  
-  <!ELEMENT structure ( %inline_level.group; )* >
+
+  <!ELEMENT structure ( #PCDATA | %character_styles; )* >
   <!ATTLIST structure
     %coreattrs;
   >
-  
-  <!ELEMENT sts ( %inline_level.group; )* >
+
+  <!ELEMENT sts ( #PCDATA | %character_styles; )* >
   <!ATTLIST sts
     %coreattrs;
   >
-  
-  <!ELEMENT tatr ( %inline_level.group; )* >
+
+  <!ELEMENT tatr ( #PCDATA | %character_styles; )* >
   <!ATTLIST tatr
     %coreattrs;
   >
-  
-  <!ELEMENT tch ( %inline_level.group; )* >
+
+  <!ELEMENT tch ( #PCDATA | %character_styles; )* >
   <!ATTLIST tch
     %coreattrs;
   >
-  
-  <!ELEMENT tch1 ( %inline_level.group; )* >
+
+  <!ELEMENT tch1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST tch1
     %coreattrs;
   >
-  
-  <!ELEMENT tch2 ( %inline_level.group; )* >
+
+  <!ELEMENT tch2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST tch2
     %coreattrs;
   >
-  
-  <!ELEMENT td ( %inline_level.group; )* >
+
+  <!ELEMENT td ( #PCDATA | %character_styles; )* >
   <!ATTLIST td
     %coreattrs;
   >
-  
-  <!ELEMENT tdf ( %inline_level.group; )* >
+
+  <!ELEMENT tdf ( #PCDATA | %character_styles; )* >
   <!ATTLIST tdf
     %coreattrs;
   >
-  
-  <!ELEMENT tdl ( %inline_level.group; )* >
+
+  <!ELEMENT tdl ( #PCDATA | %character_styles; )* >
   <!ATTLIST tdl
     %coreattrs;
   >
-  
-  <!ELEMENT tdnl ( %inline_level.group; )* >
+
+  <!ELEMENT tdnl ( #PCDATA | %character_styles; )* >
   <!ATTLIST tdnl
     %coreattrs;
   >
-  
-  <!ELEMENT tdp ( %inline_level.group; )* >
+
+  <!ELEMENT tdp ( #PCDATA | %character_styles; )* >
   <!ATTLIST tdp
     %coreattrs;
   >
-  
-  <!ELEMENT tdul ( %inline_level.group; )* >
+
+  <!ELEMENT tdul ( #PCDATA | %character_styles; )* >
   <!ATTLIST tdul
     %coreattrs;
   >
-  
-  <!ELEMENT th ( %inline_level.group; )* >
+
+  <!ELEMENT th ( #PCDATA | %character_styles; )* >
   <!ATTLIST th
     %coreattrs;
   >
-  
-  <!ELEMENT th1 ( %inline_level.group; )* >
+
+  <!ELEMENT th1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST th1
     %coreattrs;
   >
-  
-  <!ELEMENT th2 ( %inline_level.group; )* >
+
+  <!ELEMENT th2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST th2
     %coreattrs;
   >
-  
-  <!ELEMENT tn ( %inline_level.group; )* >
+
+  <!ELEMENT tn ( #PCDATA | %character_styles; )* >
   <!ATTLIST tn
     %coreattrs;
   >
-  
-  <!ELEMENT toc ( %inline_level.group; )* >
+
+  <!ELEMENT toc ( #PCDATA | %character_styles; )* >
   <!ATTLIST toc
     %coreattrs;
   >
-  
-  <!ELEMENT toc1 ( %inline_level.group; )* >
+
+  <!ELEMENT toc1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST toc1
     %coreattrs;
   >
-  
-  <!ELEMENT toc2 ( %inline_level.group; )* >
+
+  <!ELEMENT toc2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST toc2
     %coreattrs;
   >
-  
-  <!ELEMENT toc3 ( %inline_level.group; )* >
+
+  <!ELEMENT toc3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST toc3
     %coreattrs;
   >
-  
-  <!ELEMENT toc4 ( %inline_level.group; )* >
+
+  <!ELEMENT toc4 ( #PCDATA | %character_styles; )* >
   <!ATTLIST toc4
     %coreattrs;
   >
-  
-  <!ELEMENT toc5 ( %inline_level.group; )* >
+
+  <!ELEMENT toc5 ( #PCDATA | %character_styles; )* >
   <!ATTLIST toc5
     %coreattrs;
   >
-  
-  <!ELEMENT tocau ( %inline_level.group; )* >
+
+  <!ELEMENT tocau ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocau
     %coreattrs;
   >
-  
-  <!ELEMENT tocbm ( %inline_level.group; )* >
+
+  <!ELEMENT tocbm ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocbm
     %coreattrs;
   >
-  
-  <!ELEMENT tocbmf ( %inline_level.group; )* >
+
+  <!ELEMENT tocbmf ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocbmf
     %coreattrs;
   >
-  
-  <!ELEMENT tocf ( %inline_level.group; )* >
+
+  <!ELEMENT tocf ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocf
     %coreattrs;
   >
-  
-  <!ELEMENT tocfm ( %inline_level.group; )* >
+
+  <!ELEMENT tocfm ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocfm
     %coreattrs;
   >
-  
-  <!ELEMENT tocfmf ( %inline_level.group; )* >
+
+  <!ELEMENT tocfmf ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocfmf
     %coreattrs;
   >
-  
-  <!ELEMENT tocpt ( %inline_level.group; )* >
+
+  <!ELEMENT tocpt ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocpt
     %coreattrs;
   >
-  
-  <!ELEMENT tocut ( %inline_level.group; )* >
+
+  <!ELEMENT tocut ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocut
     %coreattrs;
   >
-  
-  <!ELEMENT tsecbot ( %inline_level.group; )* >
+
+  <!ELEMENT tsecbot ( #PCDATA | %character_styles; )* >
   <!ATTLIST tsecbot
     %coreattrs;
   >
-  
-  <!ELEMENT tsectop ( %inline_level.group; )* >
+
+  <!ELEMENT tsectop ( #PCDATA | %character_styles; )* >
   <!ATTLIST tsectop
     %coreattrs;
   >
-  
-  <!ELEMENT ul ( %inline_level.group; )* >
+
+  <!ELEMENT ul ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul
     %coreattrs;
   >
-  
-  <!ELEMENT ul1 ( %inline_level.group; )* >
+
+  <!ELEMENT ul1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul1
     %coreattrs;
   >
-  
-  <!ELEMENT ul1f ( %inline_level.group; )* >
+
+  <!ELEMENT ul1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul1f
     %coreattrs;
   >
-  
-  <!ELEMENT ul1l ( %inline_level.group; )* >
+
+  <!ELEMENT ul1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul1l
     %coreattrs;
   >
-  
-  <!ELEMENT ul1p ( %inline_level.group; )* >
+
+  <!ELEMENT ul1p ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul1p
     %coreattrs;
   >
-  
-  <!ELEMENT ul1pl ( %inline_level.group; )* >
+
+  <!ELEMENT ul1pl ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul1pl
     %coreattrs;
   >
-  
-  <!ELEMENT ul1s ( %inline_level.group; )* >
+
+  <!ELEMENT ul1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul1s
     %coreattrs;
   >
-  
-  <!ELEMENT ul2 ( %inline_level.group; )* >
+
+  <!ELEMENT ul2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul2
     %coreattrs;
   >
-  
-  <!ELEMENT ul2f ( %inline_level.group; )* >
+
+  <!ELEMENT ul2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul2f
     %coreattrs;
   >
-  
-  <!ELEMENT ul2l ( %inline_level.group; )* >
+
+  <!ELEMENT ul2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul2l
     %coreattrs;
   >
-  
-  <!ELEMENT ul2p ( %inline_level.group; )* >
+
+  <!ELEMENT ul2p ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul2p
     %coreattrs;
   >
-  
-  <!ELEMENT ul2s ( %inline_level.group; )* >
+
+  <!ELEMENT ul2s ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul2s
     %coreattrs;
   >
-  
-  <!ELEMENT ul3 ( %inline_level.group; )* >
+
+  <!ELEMENT ul3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul3
     %coreattrs;
   >
-  
-  <!ELEMENT ul3f ( %inline_level.group; )* >
+
+  <!ELEMENT ul3f ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul3f
     %coreattrs;
   >
-  
-  <!ELEMENT ul3l ( %inline_level.group; )* >
+
+  <!ELEMENT ul3l ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul3l
     %coreattrs;
   >
-  
-  <!ELEMENT ul3p ( %inline_level.group; )* >
+
+  <!ELEMENT ul3p ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul3p
     %coreattrs;
   >
-  
-  <!ELEMENT ul3s ( %inline_level.group; )* >
+
+  <!ELEMENT ul3s ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul3s
     %coreattrs;
   >
-  
-  <!ELEMENT ul4 ( %inline_level.group; )* >
+
+  <!ELEMENT ul4 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul4
     %coreattrs;
   >
-  
-  <!ELEMENT ul4f ( %inline_level.group; )* >
+
+  <!ELEMENT ul4f ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul4f
     %coreattrs;
   >
-  
-  <!ELEMENT ul4l ( %inline_level.group; )* >
+
+  <!ELEMENT ul4l ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul4l
     %coreattrs;
   >
-  
-  <!ELEMENT ul4p ( %inline_level.group; )* >
+
+  <!ELEMENT ul4p ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul4p
     %coreattrs;
   >
-  
-  <!ELEMENT ul4s ( %inline_level.group; )* >
+
+  <!ELEMENT ul4s ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul4s
     %coreattrs;
   >
-  
-  <!ELEMENT ul5 ( %inline_level.group; )* >
+
+  <!ELEMENT ul5 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul5
     %coreattrs;
   >
-  
-  <!ELEMENT ul5f ( %inline_level.group; )* >
+
+  <!ELEMENT ul5f ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul5f
     %coreattrs;
   >
-  
-  <!ELEMENT ul5l ( %inline_level.group; )* >
+
+  <!ELEMENT ul5l ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul5l
     %coreattrs;
   >
-  
-  <!ELEMENT ul5p ( %inline_level.group; )* >
+
+  <!ELEMENT ul5p ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul5p
     %coreattrs;
   >
-  
-  <!ELEMENT ul5s ( %inline_level.group; )* >
+
+  <!ELEMENT ul5s ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul5s
     %coreattrs;
   >
-  
-  <!ELEMENT ulf ( %inline_level.group; )* >
+
+  <!ELEMENT ulf ( #PCDATA | %character_styles; )* >
   <!ATTLIST ulf
     %coreattrs;
   >
-  
-  <!ELEMENT ulh ( %inline_level.group; )* >
+
+  <!ELEMENT ulh ( #PCDATA | %character_styles; )* >
   <!ATTLIST ulh
     %coreattrs;
   >
-  
-  <!ELEMENT ull ( %inline_level.group; )* >
+
+  <!ELEMENT ull ( #PCDATA | %character_styles; )* >
   <!ATTLIST ull
     %coreattrs;
   >
-  
-  <!ELEMENT ulp ( %inline_level.group; )* >
+
+  <!ELEMENT ulp ( #PCDATA | %character_styles; )* >
   <!ATTLIST ulp
     %coreattrs;
   >
-  
-  <!ELEMENT ulpl ( %inline_level.group; )* >
+
+  <!ELEMENT ulpl ( #PCDATA | %character_styles; )* >
   <!ATTLIST ulpl
     %coreattrs;
   >
-  
-  <!ELEMENT uls ( %inline_level.group; )* >
+
+  <!ELEMENT uls ( #PCDATA | %character_styles; )* >
   <!ATTLIST uls
     %coreattrs;
   >
-  
-  <!ELEMENT un ( %inline_level.group; )* >
+
+  <!ELEMENT un ( #PCDATA | %character_styles; )* >
   <!ATTLIST un
     %coreattrs;
   >
-  
-  <!ELEMENT us ( %inline_level.group; )* >
+
+  <!ELEMENT us ( #PCDATA | %character_styles; )* >
   <!ATTLIST us
     %coreattrs;
   >
-  
-  <!ELEMENT ut ( %inline_level.group; )* >
+
+  <!ELEMENT ut ( #PCDATA | %character_styles; )* >
   <!ATTLIST ut
     %coreattrs;
   >
-  
-  <!ELEMENT video ( %inline_level.group; )* >
+
+  <!ELEMENT video ( #PCDATA | %character_styles; )* >
   <!ATTLIST video
     %coreattrs;
   >
-  
-  <!ELEMENT wl ( %inline_level.group; )* >
+
+  <!ELEMENT wl ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl
     %coreattrs;
   >
-  
-  <!ELEMENT wl1 ( %inline_level.group; )* >
+
+  <!ELEMENT wl1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl1
     %coreattrs;
   >
-  
-  <!ELEMENT wl1f ( %inline_level.group; )* >
+
+  <!ELEMENT wl1f ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl1f
     %coreattrs;
   >
-  
-  <!ELEMENT wl1h ( %inline_level.group; )* >
+
+  <!ELEMENT wl1h ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl1h
     %coreattrs;
   >
-  
-  <!ELEMENT wl1h1 ( %inline_level.group; )* >
+
+  <!ELEMENT wl1h1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl1h1
     %coreattrs;
   >
-  
-  <!ELEMENT wl1l ( %inline_level.group; )* >
+
+  <!ELEMENT wl1l ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl1l
     %coreattrs;
   >
-  
-  <!ELEMENT wl1s ( %inline_level.group; )* >
+
+  <!ELEMENT wl1s ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl1s
     %coreattrs;
   >
-  
-  <!ELEMENT wl2 ( %inline_level.group; )* >
+
+  <!ELEMENT wl2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl2
     %coreattrs;
   >
-  
-  <!ELEMENT wl2f ( %inline_level.group; )* >
+
+  <!ELEMENT wl2f ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl2f
     %coreattrs;
   >
-  
-  <!ELEMENT wl2h ( %inline_level.group; )* >
+
+  <!ELEMENT wl2h ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl2h
     %coreattrs;
   >
-  
-  <!ELEMENT wl2h1 ( %inline_level.group; )* >
+
+  <!ELEMENT wl2h1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl2h1
     %coreattrs;
   >
-  
-  <!ELEMENT wl2l ( %inline_level.group; )* >
+
+  <!ELEMENT wl2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl2l
     %coreattrs;
   >
-  
-  <!ELEMENT wl2s ( %inline_level.group; )* >
+
+  <!ELEMENT wl2s ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl2s
     %coreattrs;
   >
-  
-  <!ELEMENT wl3 ( %inline_level.group; )* >
+
+  <!ELEMENT wl3 ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl3
     %coreattrs;
   >
-  
-  <!ELEMENT wl3f ( %inline_level.group; )* >
+
+  <!ELEMENT wl3f ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl3f
     %coreattrs;
   >
-  
-  <!ELEMENT wl3h ( %inline_level.group; )* >
+
+  <!ELEMENT wl3h ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl3h
     %coreattrs;
   >
-  
-  <!ELEMENT wl3h1 ( %inline_level.group; )* >
+
+  <!ELEMENT wl3h1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl3h1
     %coreattrs;
   >
-  
-  <!ELEMENT wl3l ( %inline_level.group; )* >
+
+  <!ELEMENT wl3l ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl3l
     %coreattrs;
   >
-  
-  <!ELEMENT wl3s ( %inline_level.group; )* >
+
+  <!ELEMENT wl3s ( #PCDATA | %character_styles; )* >
   <!ATTLIST wl3s
     %coreattrs;
   >
-  
-  <!ELEMENT wlf ( %inline_level.group; )* >
+
+  <!ELEMENT wlf ( #PCDATA | %character_styles; )* >
   <!ATTLIST wlf
     %coreattrs;
   >
-  
-  <!ELEMENT wlh ( %inline_level.group; )* >
+
+  <!ELEMENT wlh ( #PCDATA | %character_styles; )* >
   <!ATTLIST wlh
     %coreattrs;
   >
-  
-  <!ELEMENT wlh1 ( %inline_level.group; )* >
+
+  <!ELEMENT wlh1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST wlh1
     %coreattrs;
   >
-  
-  <!ELEMENT wll ( %inline_level.group; )* >
+
+  <!ELEMENT wll ( #PCDATA | %character_styles; )* >
   <!ATTLIST wll
     %coreattrs;
   >
-  
-  <!ELEMENT wls ( %inline_level.group; )* >
+
+  <!ELEMENT wls ( #PCDATA | %character_styles; )* >
   <!ATTLIST wls
     %coreattrs;
   >
-  
-  <!ELEMENT wsh ( %inline_level.group; )* >
+
+  <!ELEMENT wsh ( #PCDATA | %character_styles; )* >
   <!ATTLIST wsh
     %coreattrs;
   >
-  
 
-<!-- ~============================================================ -->
-<!--                   Character-Level Elements                    -->
-<!-- ============================================================= -->
-
+<!-- ============================================================ -->
+<!--                       Character Styles                       -->
+<!-- ============================================================ -->
 
   <!ELEMENT abbr ( #PCDATA )* >
   <!ATTLIST abbr
     %coreattrs;
   >
-  
+
   <!ELEMENT ac ( #PCDATA )* >
   <!ATTLIST ac
     %coreattrs;
   >
-  
+
   <!ELEMENT b ( #PCDATA )* >
   <!ATTLIST b
     %coreattrs;
   >
-  
+
   <!ELEMENT bcv ( #PCDATA )* >
   <!ATTLIST bcv
     %coreattrs;
   >
-  
+
   <!ELEMENT bi ( #PCDATA )* >
   <!ATTLIST bi
     %coreattrs;
   >
-  
+
   <!ELEMENT ccust1 ( #PCDATA )* >
   <!ATTLIST ccust1
     %coreattrs;
   >
-  
+
   <!ELEMENT ccust2 ( #PCDATA )* >
   <!ATTLIST ccust2
     %coreattrs;
   >
-  
+
   <!ELEMENT ccust3 ( #PCDATA )* >
   <!ATTLIST ccust3
     %coreattrs;
   >
-  
-  <!ELEMENT cemd ( #PCDATA )* >
-  <!ATTLIST cemd
-    %coreattrs;
-  >
-  
+
   <!ELEMENT chemb ( #PCDATA )* >
   <!ATTLIST chemb
     %coreattrs;
   >
-  
+
   <!ELEMENT code ( #PCDATA )* >
   <!ATTLIST code
     %coreattrs;
   >
-  
+
   <!ELEMENT code-b ( #PCDATA )* >
   <!ATTLIST code-b
     %coreattrs;
   >
-  
+
   <!ELEMENT code-bi ( #PCDATA )* >
   <!ATTLIST code-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT code-i ( #PCDATA )* >
   <!ATTLIST code-i
     %coreattrs;
   >
-  
+
   <!ELEMENT dcrit ( #PCDATA )* >
   <!ATTLIST dcrit
     %coreattrs;
   >
-  
+
   <!ELEMENT dcrit-b ( #PCDATA )* >
   <!ATTLIST dcrit-b
     %coreattrs;
   >
-  
+
   <!ELEMENT dcrit-bi ( #PCDATA )* >
   <!ATTLIST dcrit-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT dcrit-i ( #PCDATA )* >
   <!ATTLIST dcrit-i
     %coreattrs;
   >
-  
+
   <!ELEMENT dcrit-ob ( #PCDATA )* >
   <!ATTLIST dcrit-ob
     %coreattrs;
   >
-  
+
   <!ELEMENT dcrit-red ( #PCDATA )* >
   <!ATTLIST dcrit-red
     %coreattrs;
   >
-  
+
   <!ELEMENT dispk ( #PCDATA )* >
   <!ATTLIST dispk
     %coreattrs;
   >
-  
+
   <!ELEMENT dispk-i ( #PCDATA )* >
   <!ATTLIST dispk-i
     %coreattrs;
   >
-  
+
   <!ELEMENT dropcap ( #PCDATA )* >
   <!ATTLIST dropcap
     %coreattrs;
   >
-  
+
   <!ELEMENT dropcap-i ( #PCDATA )* >
   <!ATTLIST dropcap-i
     %coreattrs;
   >
-  
-  <!ELEMENT enn ( #PCDATA )* >
-  <!ATTLIST enn
-    %coreattrs;
-  >
-  
+
   <!ELEMENT ennum ( #PCDATA )* >
   <!ATTLIST ennum
     %coreattrs;
   >
-  
+
   <!ELEMENT enref ( #PCDATA )* >
   <!ATTLIST enref
     %coreattrs;
   >
-  
+
   <!ELEMENT fighn ( #PCDATA )* >
   <!ATTLIST fighn
     %coreattrs;
   >
-  
+
   <!ELEMENT first ( #PCDATA )* >
   <!ATTLIST first
     %coreattrs;
   >
-  
+
   <!ELEMENT first-i ( #PCDATA )* >
   <!ATTLIST first-i
     %coreattrs;
   >
-  
+
   <!ELEMENT fnnum ( #PCDATA )* >
   <!ATTLIST fnnum
     %coreattrs;
   >
-  
+
   <!ELEMENT fnref ( #PCDATA )* >
   <!ATTLIST fnref
     %coreattrs;
   >
-  
-  <!ELEMENT fol ( #PCDATA )* >
-  <!ATTLIST fol
-    %coreattrs;
-  >
-  
+
   <!ELEMENT frac ( #PCDATA )* >
   <!ATTLIST frac
     %coreattrs;
   >
-  
+
   <!ELEMENT frac-b ( #PCDATA )* >
   <!ATTLIST frac-b
     %coreattrs;
   >
-  
+
   <!ELEMENT frac-bi ( #PCDATA )* >
   <!ATTLIST frac-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT frac-i ( #PCDATA )* >
   <!ATTLIST frac-i
     %coreattrs;
   >
-  
+
   <!ELEMENT grc ( #PCDATA )* >
   <!ATTLIST grc
     %coreattrs;
   >
-  
+
   <!ELEMENT grc-b ( #PCDATA )* >
   <!ATTLIST grc-b
     %coreattrs;
   >
-  
+
   <!ELEMENT grc-bi ( #PCDATA )* >
   <!ATTLIST grc-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT grc-i ( #PCDATA )* >
   <!ATTLIST grc-i
     %coreattrs;
   >
-  
+
   <!ELEMENT grc-u ( #PCDATA )* >
   <!ATTLIST grc-u
     %coreattrs;
   >
-  
+
   <!ELEMENT gt ( #PCDATA )* >
   <!ATTLIST gt
     %coreattrs;
   >
-  
+
   <!ELEMENT gt-i ( #PCDATA )* >
   <!ATTLIST gt-i
     %coreattrs;
   >
-  
+
   <!ELEMENT gt-sm ( #PCDATA )* >
   <!ATTLIST gt-sm
     %coreattrs;
   >
-  
+
   <!ELEMENT gtref ( #PCDATA )* >
   <!ATTLIST gtref
     %coreattrs;
   >
-  
+
   <!ELEMENT heb ( #PCDATA )* >
   <!ATTLIST heb
     %coreattrs;
   >
-  
+
   <!ELEMENT heb-b ( #PCDATA )* >
   <!ATTLIST heb-b
     %coreattrs;
   >
-  
+
   <!ELEMENT heb-bi ( #PCDATA )* >
   <!ATTLIST heb-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT heb-i ( #PCDATA )* >
   <!ATTLIST heb-i
     %coreattrs;
   >
-  
+
   <!ELEMENT heb-u ( #PCDATA )* >
   <!ATTLIST heb-u
     %coreattrs;
   >
-  
+
   <!ELEMENT hemb ( #PCDATA )* >
   <!ATTLIST hemb
     %coreattrs;
   >
-  
+
   <!ELEMENT gtref-i ( #PCDATA )* >
   <!ATTLIST gtref-i
     %coreattrs;
   >
-  
+
   <!ELEMENT gtref-sm ( #PCDATA )* >
   <!ATTLIST gtref-sm
     %coreattrs;
   >
-  
+
   <!ELEMENT i ( #PCDATA )* >
   <!ATTLIST i
     %coreattrs;
   >
-  
+
   <!ELEMENT idx ( #PCDATA )* >
   <!ATTLIST idx
     %coreattrs;
   >
-  
+
+  <!ELEMENT img (%character_styles;)* >
+  <!ATTLIST img
+    %coreattrs;
+    src  CDATA  #IMPLIED
+    alt  CDATA  #IMPLIED
+    height  CDATA  #IMPLIED
+    width  CDATA  #IMPLIED
+  >
+
   <!ELEMENT iu ( #PCDATA )* >
   <!ATTLIST iu
     %coreattrs;
   >
-  
+
   <!ELEMENT l-chi ( #PCDATA )* >
   <!ATTLIST l-chi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-chi-b ( #PCDATA )* >
   <!ATTLIST l-chi-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-chi-bi ( #PCDATA )* >
   <!ATTLIST l-chi-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-chi-i ( #PCDATA )* >
   <!ATTLIST l-chi-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-fre ( #PCDATA )* >
   <!ATTLIST l-fre
     %coreattrs;
   >
-  
+
   <!ELEMENT l-fre-b ( #PCDATA )* >
   <!ATTLIST l-fre-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-fre-bi ( #PCDATA )* >
   <!ATTLIST l-fre-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-fre-i ( #PCDATA )* >
   <!ATTLIST l-fre-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ger ( #PCDATA )* >
   <!ATTLIST l-ger
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ger-b ( #PCDATA )* >
   <!ATTLIST l-ger-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ger-bi ( #PCDATA )* >
   <!ATTLIST l-ger-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ger-i ( #PCDATA )* >
   <!ATTLIST l-ger-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ita ( #PCDATA )* >
   <!ATTLIST l-ita
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ita-b ( #PCDATA )* >
   <!ATTLIST l-ita-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ita-bi ( #PCDATA )* >
   <!ATTLIST l-ita-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-ita-i ( #PCDATA )* >
   <!ATTLIST l-ita-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-jpn ( #PCDATA )* >
   <!ATTLIST l-jpn
     %coreattrs;
   >
-  
+
   <!ELEMENT l-jpn-b ( #PCDATA )* >
   <!ATTLIST l-jpn-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-jpn-bi ( #PCDATA )* >
   <!ATTLIST l-jpn-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-jpn-i ( #PCDATA )* >
   <!ATTLIST l-jpn-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-kor ( #PCDATA )* >
   <!ATTLIST l-kor
     %coreattrs;
   >
-  
+
   <!ELEMENT l-kor-b ( #PCDATA )* >
   <!ATTLIST l-kor-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-kor-bi ( #PCDATA )* >
   <!ATTLIST l-kor-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-kor-i ( #PCDATA )* >
   <!ATTLIST l-kor-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-lat ( #PCDATA )* >
   <!ATTLIST l-lat
     %coreattrs;
   >
-  
+
   <!ELEMENT l-lat-b ( #PCDATA )* >
   <!ATTLIST l-lat-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-lat-bi ( #PCDATA )* >
   <!ATTLIST l-lat-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-lat-i ( #PCDATA )* >
   <!ATTLIST l-lat-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-rus ( #PCDATA )* >
   <!ATTLIST l-rus
     %coreattrs;
   >
-  
+
   <!ELEMENT l-rus-b ( #PCDATA )* >
   <!ATTLIST l-rus-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-rus-bi ( #PCDATA )* >
   <!ATTLIST l-rus-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-rus-i ( #PCDATA )* >
   <!ATTLIST l-rus-i
     %coreattrs;
   >
-  
+
   <!ELEMENT l-spa ( #PCDATA )* >
   <!ATTLIST l-spa
     %coreattrs;
   >
-  
+
   <!ELEMENT l-spa-b ( #PCDATA )* >
   <!ATTLIST l-spa-b
     %coreattrs;
   >
-  
+
   <!ELEMENT l-spa-bi ( #PCDATA )* >
   <!ATTLIST l-spa-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT l-spa-i ( #PCDATA )* >
   <!ATTLIST l-spa-i
     %coreattrs;
   >
-  
+
   <!ELEMENT lang ( #PCDATA )* >
   <!ATTLIST lang
     %coreattrs;
+    lang  CDATA  #IMPLIED
   >
-  
+
   <!ELEMENT lang-b ( #PCDATA )* >
   <!ATTLIST lang-b
     %coreattrs;
+    lang  CDATA  #IMPLIED
   >
-  
+
   <!ELEMENT lang-bi ( #PCDATA )* >
   <!ATTLIST lang-bi
     %coreattrs;
+    lang  CDATA  #IMPLIED
   >
-  
+
   <!ELEMENT lang-i ( #PCDATA )* >
   <!ATTLIST lang-i
     %coreattrs;
+    lang  CDATA  #IMPLIED
   >
-  
+
   <!ELEMENT med ( #PCDATA )* >
   <!ATTLIST med
     %coreattrs;
   >
-  
+
   <!ELEMENT ob ( #PCDATA )* >
   <!ATTLIST ob
     %coreattrs;
   >
-  
+
   <!ELEMENT osf ( #PCDATA )* >
   <!ATTLIST osf
     %coreattrs;
   >
-  
+
   <!ELEMENT osf-b ( #PCDATA )* >
   <!ATTLIST osf-b
     %coreattrs;
   >
-  
+
   <!ELEMENT osf-bi ( #PCDATA )* >
   <!ATTLIST osf-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT osf-i ( #PCDATA )* >
   <!ATTLIST osf-i
     %coreattrs;
   >
-  
+
   <!ELEMENT page ( #PCDATA )* >
   <!ATTLIST page
     %coreattrs;
+    locator  CDATA  #IMPLIED
   >
-  
+
   <!ELEMENT pnum ( #PCDATA )* >
   <!ATTLIST pnum
     %coreattrs;
   >
-  
+
   <!ELEMENT rc ( #PCDATA )* >
   <!ATTLIST rc
     %coreattrs;
   >
-  
+
   <!ELEMENT red ( #PCDATA )* >
   <!ATTLIST red
     %coreattrs;
   >
-  
+
   <!ELEMENT red-b ( #PCDATA )* >
   <!ATTLIST red-b
     %coreattrs;
   >
-  
+
   <!ELEMENT red-i ( #PCDATA )* >
   <!ATTLIST red-i
     %coreattrs;
   >
-  
+
   <!ELEMENT red-ob ( #PCDATA )* >
   <!ATTLIST red-ob
     %coreattrs;
   >
-  
+
   <!ELEMENT red-sm ( #PCDATA )* >
   <!ATTLIST red-sm
     %coreattrs;
   >
-  
+
   <!ELEMENT red-sm-i ( #PCDATA )* >
   <!ATTLIST red-sm-i
     %coreattrs;
   >
-  
+
   <!ELEMENT red-sm-ob ( #PCDATA )* >
   <!ATTLIST red-sm-ob
     %coreattrs;
   >
-  
-  <!ELEMENT rh ( #PCDATA )* >
-  <!ATTLIST rh
-    %coreattrs;
-  >
-  
-  <!ELEMENT rh-i ( #PCDATA )* >
-  <!ATTLIST rh-i
-    %coreattrs;
-  >
-  
-  <!ELEMENT rhr ( #PCDATA )* >
-  <!ATTLIST rhr
-    %coreattrs;
-  >
-  
-  <!ELEMENT rhref ( #PCDATA )* >
-  <!ATTLIST rhref
-    %coreattrs;
-  >
-  
-  <!ELEMENT rhref1 ( #PCDATA )* >
-  <!ATTLIST rhref1
-    %coreattrs;
-  >
-  
-  <!ELEMENT rhv ( #PCDATA )* >
-  <!ATTLIST rhv
-    %coreattrs;
-  >
-  
+
   <!ELEMENT sm ( #PCDATA )* >
   <!ATTLIST sm
     %coreattrs;
   >
-  
+
   <!ELEMENT sm-b ( #PCDATA )* >
   <!ATTLIST sm-b
     %coreattrs;
   >
-  
+
   <!ELEMENT sm-bi ( #PCDATA )* >
   <!ATTLIST sm-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT sm-i ( #PCDATA )* >
   <!ATTLIST sm-i
     %coreattrs;
   >
-  
+
   <!ELEMENT sm-ob ( #PCDATA )* >
   <!ATTLIST sm-ob
     %coreattrs;
   >
-  
+
   <!ELEMENT smver ( #PCDATA )* >
   <!ATTLIST smver
     %coreattrs;
   >
-  
+
   <!ELEMENT speaker ( #PCDATA )* >
   <!ATTLIST speaker
     %coreattrs;
   >
-  
+
   <!ELEMENT speaker-i ( #PCDATA )* >
   <!ATTLIST speaker-i
     %coreattrs;
   >
-  
+
   <!ELEMENT strk ( #PCDATA )* >
   <!ATTLIST strk
     %coreattrs;
   >
-  
+
   <!ELEMENT sub ( #PCDATA )* >
   <!ATTLIST sub
     %coreattrs;
   >
-  
+
   <!ELEMENT sub-b ( #PCDATA )* >
   <!ATTLIST sub-b
     %coreattrs;
   >
-  
+
   <!ELEMENT sub-bi ( #PCDATA )* >
   <!ATTLIST sub-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT sub-i ( #PCDATA )* >
   <!ATTLIST sub-i
     %coreattrs;
   >
-  
+
   <!ELEMENT sub-u ( #PCDATA )* >
   <!ATTLIST sub-u
     %coreattrs;
   >
-  
+
   <!ELEMENT sup ( #PCDATA )* >
   <!ATTLIST sup
     %coreattrs;
   >
-  
+
   <!ELEMENT sup-b ( #PCDATA )* >
   <!ATTLIST sup-b
     %coreattrs;
   >
-  
+
   <!ELEMENT sup-bi ( #PCDATA )* >
   <!ATTLIST sup-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT sup-i ( #PCDATA )* >
   <!ATTLIST sup-i
     %coreattrs;
   >
-  
+
   <!ELEMENT sup-u ( #PCDATA )* >
   <!ATTLIST sup-u
     %coreattrs;
   >
-  
+
   <!ELEMENT symb ( #PCDATA )* >
   <!ATTLIST symb
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-b ( #PCDATA )* >
   <!ATTLIST symb-b
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-i ( #PCDATA )* >
   <!ATTLIST symb-i
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sub ( #PCDATA )* >
   <!ATTLIST symb-sub
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sub-b ( #PCDATA )* >
   <!ATTLIST symb-sub-b
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sub-bi ( #PCDATA )* >
   <!ATTLIST symb-sub-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sub-i ( #PCDATA )* >
   <!ATTLIST symb-sub-i
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sup ( #PCDATA )* >
   <!ATTLIST symb-sup
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sup-b ( #PCDATA )* >
   <!ATTLIST symb-sup-b
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sup-bi ( #PCDATA )* >
   <!ATTLIST symb-sup-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT symb-sup-i ( #PCDATA )* >
   <!ATTLIST symb-sup-i
     %coreattrs;
   >
-  
+
   <!ELEMENT taxclass ( #PCDATA )* >
   <!ATTLIST taxclass
     %coreattrs;
   >
-  
+
   <!ELEMENT taxfamily ( #PCDATA )* >
   <!ATTLIST taxfamily
     %coreattrs;
   >
-  
+
   <!ELEMENT taxgenus ( #PCDATA )* >
   <!ATTLIST taxgenus
     %coreattrs;
   >
-  
+
   <!ELEMENT taxkingdom ( #PCDATA )* >
   <!ATTLIST taxkingdom
     %coreattrs;
   >
-  
+
   <!ELEMENT taxorder ( #PCDATA )* >
   <!ATTLIST taxorder
     %coreattrs;
   >
-  
+
   <!ELEMENT taxphylum ( #PCDATA )* >
   <!ATTLIST taxphylum
     %coreattrs;
   >
-  
+
   <!ELEMENT taxspecies ( #PCDATA )* >
   <!ATTLIST taxspecies
     %coreattrs;
   >
-  
+
   <!ELEMENT tel ( #PCDATA )* >
   <!ATTLIST tel
     %coreattrs;
   >
-  
+
   <!ELEMENT tetr ( #PCDATA )* >
   <!ATTLIST tetr
     %coreattrs;
   >
-  
+
   <!ELEMENT tetr-b ( #PCDATA )* >
   <!ATTLIST tetr-b
     %coreattrs;
   >
-  
+
   <!ELEMENT tetr-i ( #PCDATA )* >
   <!ATTLIST tetr-i
     %coreattrs;
   >
-  
+
   <!ELEMENT tetr-ob ( #PCDATA )* >
   <!ATTLIST tetr-ob
     %coreattrs;
   >
-  
+
   <!ELEMENT tetr-red ( #PCDATA )* >
   <!ATTLIST tetr-red
     %coreattrs;
   >
-  
+
   <!ELEMENT tetr-red-i ( #PCDATA )* >
   <!ATTLIST tetr-red-i
     %coreattrs;
   >
-  
+
   <!ELEMENT tetr-red-ob ( #PCDATA )* >
   <!ATTLIST tetr-red-ob
     %coreattrs;
   >
-  
+
   <!ELEMENT tgrc ( #PCDATA )* >
   <!ATTLIST tgrc
     %coreattrs;
   >
-  
+
   <!ELEMENT tgrc-b ( #PCDATA )* >
   <!ATTLIST tgrc-b
     %coreattrs;
   >
-  
+
   <!ELEMENT tgrc-bi ( #PCDATA )* >
   <!ATTLIST tgrc-bi
     %coreattrs;
   >
-  
+
   <!ELEMENT tgrc-i ( #PCDATA )* >
   <!ATTLIST tgrc-i
     %coreattrs;
   >
-  
+
   <!ELEMENT theb ( #PCDATA )* >
   <!ATTLIST theb
     %coreattrs;
   >
-  
+
   <!ELEMENT theb-i ( #PCDATA )* >
   <!ATTLIST theb-i
     %coreattrs;
   >
-  
+
   <!ELEMENT theb-ob ( #PCDATA )* >
   <!ATTLIST theb-ob
     %coreattrs;
   >
-  
+
   <!ELEMENT theb-red ( #PCDATA )* >
   <!ATTLIST theb-red
     %coreattrs;
   >
-  
+
   <!ELEMENT thn ( #PCDATA )* >
   <!ATTLIST thn
     %coreattrs;
   >
-  
-  <!ELEMENT tocnum ( #PCDATA )* >
-  <!ATTLIST tocnum
-    %coreattrs;
-  >
-  
+
   <!ELEMENT trh ( #PCDATA )* >
   <!ATTLIST trh
     %coreattrs;
   >
-  
+
   <!ELEMENT trh-i ( #PCDATA )* >
   <!ATTLIST trh-i
     %coreattrs;
   >
-  
-  <!ELEMENT tso ( #PCDATA )* >
-  <!ATTLIST tso
-    %coreattrs;
-  >
-  
+
   <!ELEMENT u ( #PCDATA )* >
   <!ATTLIST u
     %coreattrs;
   >
-  
+
   <!ELEMENT url ( #PCDATA )* >
   <!ATTLIST url
     %coreattrs;
+    href  CDATA  #IMPLIED
   >
-  
+
   <!ELEMENT ver ( #PCDATA )* >
   <!ATTLIST ver
     %coreattrs;
   >
-  
+
   <!ELEMENT xbk ( #PCDATA )* >
   <!ATTLIST xbk
     %coreattrs;
   >
-  
+
   <!ELEMENT xbr ( #PCDATA )* >
   <!ATTLIST xbr
     %coreattrs;
   >
-  
+
   <!ELEMENT xref ( #PCDATA )* >
   <!ATTLIST xref
     %coreattrs;
   >
-  
+
   <!ELEMENT xref-i ( #PCDATA )* >
   <!ATTLIST xref-i
     %coreattrs;
   >
-  
 
-<!-- ~============================================================ -->
-<!--                   Table Elements                              -->
-<!-- ============================================================= -->
 
-  <!ELEMENT table ( tr+ ) >
-  <!ATTLIST table
-      %coreattrs;
-      width CDATA #IMPLIED
-      style CDATA #IMPLIED
-      border CDATA #IMPLIED>
-
-  <!ELEMENT tr ( cell+ ) >
-  <!ATTLIST tr
-      %coreattrs;
-      align CDATA #IMPLIED
-      valign CDATA #IMPLIED >
-
-  <!ELEMENT cell ( %paragraph_level.group; )* >
-  <!ATTLIST cell
-      %coreattrs;
-      colspan CDATA #IMPLIED
-      rowspan CDATA #IMPLIED 
-      align CDATA #IMPLIED   >
-
-<!-- ~============================================================ -->
-<!--               Non-Textual Inline Elements                     -->
-<!-- ============================================================= -->
-
-  <!ELEMENT img ( %inline_level.group; )* >
-  <!ATTLIST img
-    %coreattrs;
-    src     CDATA     #REQUIRED
-    alt     CDATA     #IMPLIED
-    height  CDATA     #IMPLIED
-    width   CDATA     #IMPLIED
-  >
