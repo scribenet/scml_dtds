@@ -4190,7 +4190,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT img (%character_styles;)* >
+  <!ELEMENT img ( #PCDATA )* >
   <!ATTLIST img
     %coreattrs;
     src  CDATA  #IMPLIED
