@@ -1,11 +1,15 @@
 # The DTD
 
-This is the home of the ScML DTD.
+This is the home of the ScML and sam DTDs.
 
 ## Updating the DTD
 
+The DTDs should be generated using the elements.yml and scml_generator in the scribenet/scml_builder repo. Elements and validation rules should be altered within the elements.yml file. In the templates directory in that repo, there are templates for the static portions of the DTD. Make additions to those templates and process a new copy of the DTD. We strongly discourage making manual updates to the DTD copies in this repo because that creates information not easily portable to the other iterations of the tag list.
+
+When changing the DTD templates:
+
 - Make sure to the version number.
-- Make sure to add comments to the reason/occasion and the names of thos involved.
+- Make sure to add comments to the reason/occasion and the names of those involved.
 
 ## Testing the DTD
 
