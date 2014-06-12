@@ -8,8 +8,9 @@ The DTDs should be generated using the elements.yml and scml_generator in the sc
 
 When changing the DTD templates:
 
-- Make sure to the version number.
-- Make sure to add comments to the reason/occasion and the names of those involved.
+- Change the version number.
+- Add comments to the reason/occasion column describing the update.
+- Add the names of those involved.
 
 ## Testing the DTD
 
