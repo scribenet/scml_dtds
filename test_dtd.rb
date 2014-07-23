@@ -33,7 +33,7 @@ class DTDTests < MiniTest::Unit::TestCase
 </sam>
 """
     setup_and_exercise 'sam'
-    assert is_valid 
+    assert is_valid
   end
 
   def test_sam_with_table
@@ -46,7 +46,7 @@ class DTDTests < MiniTest::Unit::TestCase
 </sam>
 """
     setup_and_exercise 'sam'
-    assert is_valid 
+    assert is_valid
   end
 
   def test_invalid_sam
@@ -57,7 +57,7 @@ class DTDTests < MiniTest::Unit::TestCase
 </sam>
 """
     setup_and_exercise 'sam'
-    assert is_not_valid 
+    assert is_not_valid
   end
 
   def test_table_cells
@@ -73,7 +73,7 @@ class DTDTests < MiniTest::Unit::TestCase
 </scml>
 """
     setup_and_exercise 'scml'
-    assert is_valid 
+    assert is_valid
   end
 
   def test_lots_of_thing_in_table_cells
@@ -125,4 +125,30 @@ class DTDTests < MiniTest::Unit::TestCase
     assert is_valid
   end
 
+  def test_lang_allowed_everywhere_scml
+@input = '
+<scml lang="en">
+<book lang="en">
+<chapter lang="en">
+<sidebar lang="en">
+<blockquote lang="en"/>
+</sidebar>
+</chapter>
+</book>
+</scml>
+'
+    setup_and_exercise 'scml'
+    assert is_valid
+  end
+
+  def test_lang_allowed_everywhere_sam
+@input = '
+<sam lang="en">
+<p lang="en"><i lang="en"/></p>
+<ah lang="en"><grc lang="en"/></ah>
+</sam>
+'
+    setup_and_exercise 'sam'
+    assert is_valid
+  end
 end
