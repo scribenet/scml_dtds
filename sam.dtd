@@ -1,6 +1,6 @@
 <!-- ============================================================= -->
 <!--  MODULE:    Scribe Abbreviated Markup (Sam)                   -->
-<!--  VERSION:   1.0.0                                             -->
+<!--  VERSION:   1.0.1                                             -->
 <!--  DATE:      April 2014                                        -->
 <!--                                                               -->
 <!-- ============================================================= -->
@@ -17,6 +17,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
          and the root. Only paragraph-level
          elements and tables are valid
          children of the root.
+2        Adding "lang" as global attr.       dcorrigan   1.0.1  140729
 -->
 
 <!-- ============================================================ -->
@@ -26,7 +27,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ENTITY % coreattrs
     "id        ID      #IMPLIED
     type      CDATA   #IMPLIED
-    semantic  CDATA   #IMPLIED"
+    semantic  CDATA   #IMPLIED
+    lang      CDATA   #IMPLIED"
   >
 
   <!ENTITY % paragraph_styles
@@ -826,7 +828,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ATTLIST sam
     %coreattrs;
     bver  CDATA  #IMPLIED
-    lang  CDATA  #IMPLIED
   >
 
 <!-- ============================================================ -->
@@ -4387,25 +4388,21 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT lang ( #PCDATA )* >
   <!ATTLIST lang
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT lang-b ( #PCDATA )* >
   <!ATTLIST lang-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT lang-bi ( #PCDATA )* >
   <!ATTLIST lang-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT lang-i ( #PCDATA )* >
   <!ATTLIST lang-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT med ( #PCDATA )* >

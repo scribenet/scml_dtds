@@ -1,6 +1,6 @@
 <!-- ============================================================= -->
 <!--  MODULE:    Scribe Markup Language (ScML)                     -->
-<!--  VERSION:   2.0.0                                             -->
+<!--  VERSION:   2.0.2                                             -->
 <!--  DATE:      April 2014                                        -->
 <!--                                                               -->
 <!-- ============================================================= -->
@@ -31,6 +31,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 58       Addition of some minor attributes dcorrigan     2.0.1  140509
          to url, page, and table
          Fixed placement of hr
+59       Adding "lang" as global attr.     dcorrigan     2.0.2  140729
 -->
 
 <!-- ============================================================ -->
@@ -40,7 +41,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ENTITY % coreattrs
     "id        ID      #IMPLIED
     type      CDATA   #IMPLIED
-    semantic  CDATA   #IMPLIED"
+    semantic  CDATA   #IMPLIED
+    lang      CDATA   #IMPLIED"
   >
 
   <!ENTITY % block_styles
@@ -869,7 +871,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ATTLIST scml
     %coreattrs;
     bver  CDATA  #IMPLIED
-    lang  CDATA  #IMPLIED
   >
 
 <!-- ============================================================ -->
@@ -4413,241 +4414,201 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT l-chi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-chi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-chi-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-chi-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-chi-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-chi-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-chi-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-chi-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-fre ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-fre
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-fre-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-fre-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-fre-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-fre-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-fre-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-fre-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ger ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ger
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ger-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ger-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ger-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ger-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ger-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ger-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ita ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ita
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ita-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ita-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ita-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ita-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-ita-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-ita-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-jpn ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-jpn
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-jpn-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-jpn-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-jpn-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-jpn-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-jpn-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-jpn-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-kor ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-kor
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-kor-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-kor-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-kor-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-kor-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-kor-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-kor-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-lat ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-lat
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-lat-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-lat-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-lat-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-lat-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-lat-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-lat-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-rus ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-rus
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-rus-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-rus-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-rus-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-rus-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-rus-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-rus-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-spa ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-spa
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-spa-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-spa-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-spa-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-spa-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT l-spa-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST l-spa-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT lang ( #PCDATA | %character_styles; )* >
   <!ATTLIST lang
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT lang-b ( #PCDATA | %character_styles; )* >
   <!ATTLIST lang-b
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT lang-bi ( #PCDATA | %character_styles; )* >
   <!ATTLIST lang-bi
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT lang-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST lang-i
     %coreattrs;
-    lang  CDATA  #IMPLIED
   >
 
   <!ELEMENT med ( #PCDATA | %character_styles; )* >
