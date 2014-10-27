@@ -151,4 +151,41 @@ class DTDTests < MiniTest::Unit::TestCase
     setup_and_exercise 'sam'
     assert is_valid
   end
+
+  def test_idref_on_xref_in_sam
+@input = <<-EOF
+<sam>
+<p id="p01">some stuff</p>
+<ah><xref idref="p01">whatever</xref></ah>
+</sam>
+EOF
+    setup_and_exercise 'sam'
+    assert is_valid
+  end
+
+  def test_anchor_in_sam
+@input = <<-EOF
+<sam>
+<p id="p01">some stuff<a id="j9"/></p>
+</sam>
+EOF
+    setup_and_exercise 'sam'
+    assert is_valid
+  end
+
+  def test_footnote_endnote_in_sam
+@input = <<-EOF
+<sam>
+<p>more stuff</p>
+<footnote>
+<fn>something</fn>
+</footnote>
+<endnote>
+<en>something</en>
+</endnote>
+</sam>
+EOF
+    setup_and_exercise 'sam'
+    assert is_valid
+  end
 end

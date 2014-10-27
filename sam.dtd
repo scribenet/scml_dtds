@@ -1,7 +1,7 @@
 <!-- ============================================================= -->
 <!--  MODULE:    Scribe Abbreviated Markup (Sam)                   -->
-<!--  VERSION:   1.0.1                                             -->
-<!--  DATE:      April 2014                                        -->
+<!--  VERSION:   1.1.0                                             -->
+<!--  DATE:      October 2014                                      -->
 <!--                                                               -->
 <!-- ============================================================= -->
 
@@ -18,6 +18,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
          elements and tables are valid
          children of the root.
 2        Adding "lang" as global attr.       dcorrigan   1.0.1  140729
+3        Added "idref" attr to xref.         dcorrigan   1.1.0  141001
+         Added "a" as sam element.
+         Added footnote and endnote
+         as valid structure tags.
+       
 -->
 
 <!-- ============================================================ -->
@@ -30,6 +35,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     semantic  CDATA   #IMPLIED
     lang      CDATA   #IMPLIED"
   >
+
+  <!ENTITY % block_styles
+  "endnote
+  | footnote
+  | table">
 
   <!ENTITY % paragraph_styles
   "ah
@@ -646,7 +656,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | wsh">
 
   <!ENTITY % character_styles
-  "abbr
+  "a
+  | abbr
   | ac
   | b
   | bcv
@@ -824,10 +835,24 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 <!--                             Root                             -->
 <!-- ============================================================ -->
 
-  <!ELEMENT sam (%paragraph_styles; | table)+ >
+  <!ELEMENT sam (%paragraph_styles; | table | footnote | endnote)+ >
   <!ATTLIST sam
     %coreattrs;
     bver  CDATA  #IMPLIED
+  >
+
+<!-- ============================================================ -->
+<!--                         Block Styles                         -->
+<!-- ============================================================ -->
+
+  <!ELEMENT endnote (%paragraph_styles;)* >
+  <!ATTLIST endnote
+    %coreattrs;
+  >
+
+  <!ELEMENT footnote (%paragraph_styles;)* >
+  <!ATTLIST footnote
+    %coreattrs;
   >
 
 <!-- ============================================================ -->
@@ -3926,6 +3951,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 <!--                       Character Styles                       -->
 <!-- ============================================================ -->
 
+  <!ELEMENT a ( #PCDATA )* >
+  <!ATTLIST a
+    %coreattrs;
+  >
+
   <!ELEMENT abbr ( #PCDATA )* >
   <!ATTLIST abbr
     %coreattrs;
@@ -4795,11 +4825,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT xref ( #PCDATA )* >
   <!ATTLIST xref
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT xref-i ( #PCDATA )* >
   <!ATTLIST xref-i
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
 
