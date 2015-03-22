@@ -1,7 +1,7 @@
 <!-- ============================================================= -->
 <!--  MODULE:    Scribe Markup Language (ScML)                     -->
-<!--  VERSION:   2.1.0                                             -->
-<!--  DATE:      January 2015                                        -->
+<!--  VERSION:   2.1.1                                             -->
+<!--  DATE:      March 2015                                        -->
 <!--                                                               -->
 <!-- ============================================================= -->
 
@@ -39,6 +39,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
             (language variants: l-)
           - added "alt" attr to
             bk, ut, pt, ct
+60       corrected use of IDREF attr       dcorrigan     2.1.1  150322 
        
 -->
 
@@ -658,8 +659,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | tocfmf
   | tocpt
   | tocut
-  | tsecbot
-  | tsectop
   | ul
   | ul1
   | ul1f
@@ -3976,16 +3975,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT tsecbot ( #PCDATA | %character_styles; )* >
-  <!ATTLIST tsecbot
-    %coreattrs;
-  >
-
-  <!ELEMENT tsectop ( #PCDATA | %character_styles; )* >
-  <!ATTLIST tsectop
-    %coreattrs;
-  >
-
   <!ELEMENT ul ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul
     %coreattrs;
@@ -4541,6 +4530,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT gtref ( #PCDATA | %character_styles; )* >
   <!ATTLIST gtref
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT gtref-i ( #PCDATA | %character_styles; )* >
@@ -4583,7 +4573,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT hemb ( #PCDATA | %character_styles; )* >
   <!ATTLIST hemb
     %coreattrs;
-    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT hl ( #PCDATA | %character_styles; )* >

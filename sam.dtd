@@ -1,7 +1,7 @@
 <!-- ============================================================= -->
 <!--  MODULE:    Scribe Abbreviated Markup (Sam)                   -->
-<!--  VERSION:   1.2.0                                             -->
-<!--  DATE:      January 2015                                      -->
+<!--  VERSION:   1.2.1                                             -->
+<!--  DATE:      March 2015                                        -->
 <!--                                                               -->
 <!-- ============================================================= -->
 
@@ -27,6 +27,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
           - added 34 char styles
           - removed 36 char styles
             (language variants: l-)
+5        corrected use of IDREF attr         dcorrigan   1.2.1  150322 
        
 -->
 
@@ -624,8 +625,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | tocfmf
   | tocpt
   | tocut
-  | tsecbot
-  | tsectop
   | ul
   | ul1
   | ul1f
@@ -3804,16 +3803,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT tsecbot ( #PCDATA | %character_styles; )* >
-  <!ATTLIST tsecbot
-    %coreattrs;
-  >
-
-  <!ELEMENT tsectop ( #PCDATA | %character_styles; )* >
-  <!ATTLIST tsectop
-    %coreattrs;
-  >
-
   <!ELEMENT ul ( #PCDATA | %character_styles; )* >
   <!ATTLIST ul
     %coreattrs;
@@ -4361,16 +4350,19 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT gtref ( #PCDATA )* >
   <!ATTLIST gtref
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT gtref-i ( #PCDATA )* >
   <!ATTLIST gtref-i
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT gtref-sm ( #PCDATA )* >
   <!ATTLIST gtref-sm
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT heb ( #PCDATA )* >
@@ -4985,6 +4977,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT xbk ( #PCDATA )* >
   <!ATTLIST xbk
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT xbr ( #PCDATA )* >
