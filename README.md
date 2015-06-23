@@ -14,7 +14,7 @@ When changing the DTD templates:
 
 ## Testing the DTD
 
-The file test_dtd.rb exists for testing examples against the DTD to verify that it behaves as expected.
+The file test_dtd.rb exists for testing examples against the DTD to verify that validation behaves as expected.
 
 ### Running the Tests
 
@@ -29,3 +29,4 @@ Follow the format seen in the existing methods:
 - All test methods must begin with `test_`
 - Write example scml into the @input variable
 - Assert either `is_valid` or `is_not_valid`
+
