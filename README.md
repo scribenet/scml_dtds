@@ -11,6 +11,7 @@ When changing the DTD templates:
 - Change the version number.
 - Add comments to the reason/occasion column describing the update.
 - Add the names of those involved.
+- Make sure the tests pass.
 
 ## Testing the DTD
 
