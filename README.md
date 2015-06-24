@@ -15,7 +15,7 @@ When changing the DTD templates:
 
 ## Testing the DTD
 
-The file test_dtd.rb exists for testing examples against the DTD to verify that validation behaves as expected.
+The file test_dtd.rb exists for testing examples against the DTD to verify that validation behaves as expected. It expects that xmlstarlet is installed and can be invoked by that name.
 
 ### Running the Tests
 

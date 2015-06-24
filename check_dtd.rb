@@ -16,7 +16,6 @@ f = File.readlines("scml.dtd")
 # ruby check_dtd.rb absent FILE
 #    - will print out a list of all the element names in the FILE that are not in the dtd
 
-
 elements = f.grep(/<!ELEMENT (.*)(\s+)\(|<!ELEMENT (.*)$/){$1}
 data_group_elements = f.join.slice(/<!ENTITY % data\.group(.*)Character Entities/m, 1).split(/\n|\r/).grep(/\| ([^">]*)/){$1}
 other_group_elements = f.grep(/\| [^|]* \|/).reject{ |e| e.match /<!ELEMENT|type \(/}.map{|s| s.gsub(/[\s>"]/, "").split("|") }.flatten
