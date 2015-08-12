@@ -1,7 +1,7 @@
 <!-- ============================================================= -->
 <!--  MODULE:    Scribe Markup Language (ScML)                     -->
 <!--  VERSION:   2.1.2                                             -->
-<!--  DATE:      March 2015                                        -->
+<!--  DATE:      August 2015                                       -->
 <!--                                                               -->
 <!-- ============================================================= -->
 
@@ -4690,7 +4690,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT page EMPTY >
+  <!ELEMENT page (idx)* >
   <!ATTLIST page
     %coreattrs;
     locator  CDATA  #IMPLIED
