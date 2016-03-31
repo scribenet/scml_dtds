@@ -4784,7 +4784,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     level3  CDATA  #IMPLIED
     pgformat  CDATA  #IMPLIED
     span  CDATA  #IMPLIED
-    type  CDATA  #IMPLIED
     text  CDATA  #IMPLIED
   >
 
