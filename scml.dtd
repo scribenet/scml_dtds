@@ -1,6 +1,6 @@
 <!-- ============================================================= -->
 <!--  MODULE:    Scribe Markup Language (ScML)                     -->
-<!--  VERSION:   2.1.2                                             -->
+<!--  VERSION:   2.2.0                                             -->
 <!--  DATE:      August 2015                                       -->
 <!--                                                               -->
 <!-- ============================================================= -->
@@ -42,7 +42,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 60       corrected use of IDREF attr       dcorrigan     2.1.1  150322 
 61       added term, level1, etc. attrs    dcorrigan     2.1.2  150810
          for idx as index term metadata
-       
+62       2016 major tag update:            dcorrigan     2.2.0  160401
+          - expanded idx indexing attrs
+          - added 18 para styles
+          - added 11 char styles
+ 
 -->
 
 <!-- ============================================================ -->
@@ -166,6 +170,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | bx1ulp
   | bxaft
   | bxah
+  | bxatr
+  | bxatr1
   | bxau
   | bxau1
   | bxbh
@@ -478,6 +484,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | rpvl
   | rpy
   | rv
+  | rvf
   | rvd
   | rvh
   | rvt
@@ -486,10 +493,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | sb1f
   | sb1h
   | sb1l
+  | sb1s
   | sb1t
   | sbaft
   | sbah
   | sbahaft
+  | sbatr
+  | sbatr1
   | sbbh
   | sbbhaft
   | sbbl
@@ -583,6 +593,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | serau
   | serbh
   | serf
+  | sered
   | serp
   | serpf
   | sers
@@ -592,30 +603,39 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | sl1
   | sl1f
   | sl1l
+  | sl1s
   | sl2
   | sl2f
   | sl2l
+  | sl2s
   | sl3
   | sl3f
   | sl3l
+  | sl3s
   | sl4
   | sl4f
   | sl4l
+  | sl4s
   | sl5
   | sl5f
   | sl5l
+  | sl5s
   | sl6
   | sl6f
   | sl6l
+  | sl6s
   | sl7
   | sl7f
   | sl7l
+  | sl7s
   | sl8
   | sl8f
   | sl8l
+  | sl8s
   | sl9
   | sl9f
   | sl9l
+  | sl9s
   | slf
   | slh
   | sli
@@ -661,6 +681,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | tocfmf
   | tocpt
   | tocut
+  | tocill
+  | tocill1
   | ul
   | ul1
   | ul1f
@@ -735,9 +757,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | bu
   | bxhn
   | ccust1
+  | ccust1-i
   | ccust2
+  | ccust2-i
   | ccust3
+  | ccust3-i
   | chemb
+  | cite
   | code
   | code-b
   | code-bi
@@ -754,6 +780,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | dropcap-i
   | ennum
   | enref
+  | em
+  | eqn
   | exhn
   | fighn
   | first
@@ -764,6 +792,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | frac-b
   | frac-bi
   | frac-i
+  | fterm
   | grc
   | grc-b
   | grc-bi
@@ -840,6 +869,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | strk-b
   | strk-bi
   | strk-i
+  | strong
   | sub
   | sub-b
   | sub-bi
@@ -886,6 +916,9 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | theb-ob
   | theb-red
   | thn
+  | tnnum
+  | tnref
+  | tnw
   | trh
   | trh-i
   | u
@@ -1497,6 +1530,16 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT bxah ( #PCDATA | %character_styles; )* >
   <!ATTLIST bxah
+    %coreattrs;
+  >
+
+  <!ELEMENT bxatr ( #PCDATA | %character_styles; )* >
+  <!ATTLIST bxatr
+    %coreattrs;
+  >
+
+  <!ELEMENT bxatr1 ( #PCDATA | %character_styles; )* >
+  <!ATTLIST bxatr1
     %coreattrs;
   >
 
@@ -3062,6 +3105,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT rvf ( #PCDATA | %character_styles; )* >
+  <!ATTLIST rvf
+    %coreattrs;
+  >
+
   <!ELEMENT rvd ( #PCDATA | %character_styles; )* >
   <!ATTLIST rvd
     %coreattrs;
@@ -3102,6 +3150,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT sb1s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sb1s
+    %coreattrs;
+  >
+
   <!ELEMENT sb1t ( #PCDATA | %character_styles; )* >
   <!ATTLIST sb1t
     %coreattrs;
@@ -3119,6 +3172,16 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT sbahaft ( #PCDATA | %character_styles; )* >
   <!ATTLIST sbahaft
+    %coreattrs;
+  >
+
+  <!ELEMENT sbatr ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sbatr
+    %coreattrs;
+  >
+
+  <!ELEMENT sbatr1 ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sbatr1
     %coreattrs;
   >
 
@@ -3587,6 +3650,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT sered ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sered
+    %coreattrs;
+  >
+
   <!ELEMENT serp ( #PCDATA | %character_styles; )* >
   <!ATTLIST serp
     %coreattrs;
@@ -3632,6 +3700,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT sl1s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl1s
+    %coreattrs;
+  >
+
   <!ELEMENT sl2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl2
     %coreattrs;
@@ -3644,6 +3717,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT sl2l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl2l
+    %coreattrs;
+  >
+
+  <!ELEMENT sl2s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl2s
     %coreattrs;
   >
 
@@ -3662,6 +3740,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT sl3s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl3s
+    %coreattrs;
+  >
+
   <!ELEMENT sl4 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl4
     %coreattrs;
@@ -3674,6 +3757,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT sl4l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl4l
+    %coreattrs;
+  >
+
+  <!ELEMENT sl4s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl4s
     %coreattrs;
   >
 
@@ -3692,6 +3780,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT sl5s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl5s
+    %coreattrs;
+  >
+
   <!ELEMENT sl6 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl6
     %coreattrs;
@@ -3704,6 +3797,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT sl6l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl6l
+    %coreattrs;
+  >
+
+  <!ELEMENT sl6s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl6s
     %coreattrs;
   >
 
@@ -3722,6 +3820,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT sl7s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl7s
+    %coreattrs;
+  >
+
   <!ELEMENT sl8 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl8
     %coreattrs;
@@ -3737,6 +3840,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT sl8s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl8s
+    %coreattrs;
+  >
+
   <!ELEMENT sl9 ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl9
     %coreattrs;
@@ -3749,6 +3857,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT sl9l ( #PCDATA | %character_styles; )* >
   <!ATTLIST sl9l
+    %coreattrs;
+  >
+
+  <!ELEMENT sl9s ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sl9s
     %coreattrs;
   >
 
@@ -3974,6 +4087,16 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT tocut ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocut
+    %coreattrs;
+  >
+
+  <!ELEMENT tocill ( #PCDATA | %character_styles; )* >
+  <!ATTLIST tocill
+    %coreattrs;
+  >
+
+  <!ELEMENT tocill1 ( #PCDATA | %character_styles; )* >
+  <!ATTLIST tocill1
     %coreattrs;
   >
 
@@ -4342,8 +4465,18 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT ccust1-i ( #PCDATA | %character_styles; )* >
+  <!ATTLIST ccust1-i
+    %coreattrs;
+  >
+
   <!ELEMENT ccust2 ( #PCDATA | %character_styles; )* >
   <!ATTLIST ccust2
+    %coreattrs;
+  >
+
+  <!ELEMENT ccust2-i ( #PCDATA | %character_styles; )* >
+  <!ATTLIST ccust2-i
     %coreattrs;
   >
 
@@ -4352,8 +4485,18 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT ccust3-i ( #PCDATA | %character_styles; )* >
+  <!ATTLIST ccust3-i
+    %coreattrs;
+  >
+
   <!ELEMENT chemb ( #PCDATA | %character_styles; )* >
   <!ATTLIST chemb
+    %coreattrs;
+  >
+
+  <!ELEMENT cite ( #PCDATA | %character_styles; )* >
+  <!ATTLIST cite
     %coreattrs;
   >
 
@@ -4438,6 +4581,16 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     idref  IDREF  #IMPLIED
   >
 
+  <!ELEMENT em ( #PCDATA | %character_styles; )* >
+  <!ATTLIST em
+    %coreattrs;
+  >
+
+  <!ELEMENT eqn ( #PCDATA | %character_styles; )* >
+  <!ATTLIST eqn
+    %coreattrs;
+  >
+
   <!ELEMENT exhn ( #PCDATA | %character_styles; )* >
   <!ATTLIST exhn
     %coreattrs;
@@ -4486,6 +4639,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT frac-i ( #PCDATA | %character_styles; )* >
   <!ATTLIST frac-i
+    %coreattrs;
+  >
+
+  <!ELEMENT fterm ( #PCDATA | %character_styles; )* >
+  <!ATTLIST fterm
     %coreattrs;
   >
 
@@ -4624,6 +4782,10 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     level1  CDATA  #IMPLIED
     level2  CDATA  #IMPLIED
     level3  CDATA  #IMPLIED
+    pgformat  CDATA  #IMPLIED
+    span  CDATA  #IMPLIED
+    type  CDATA  #IMPLIED
+    text  CDATA  #IMPLIED
   >
 
   <!ELEMENT img EMPTY >
@@ -4881,6 +5043,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT strong ( #PCDATA | %character_styles; )* >
+  <!ATTLIST strong
+    %coreattrs;
+  >
+
   <!ELEMENT sub ( #PCDATA | %character_styles; )* >
   <!ATTLIST sub
     %coreattrs;
@@ -5108,6 +5275,21 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT thn ( #PCDATA | %character_styles; )* >
   <!ATTLIST thn
+    %coreattrs;
+  >
+
+  <!ELEMENT tnnum ( #PCDATA | %character_styles; )* >
+  <!ATTLIST tnnum
+    %coreattrs;
+  >
+
+  <!ELEMENT tnref ( #PCDATA | %character_styles; )* >
+  <!ATTLIST tnref
+    %coreattrs;
+  >
+
+  <!ELEMENT tnw ( #PCDATA | %character_styles; )* >
+  <!ATTLIST tnw
     %coreattrs;
   >
 
