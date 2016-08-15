@@ -9,7 +9,7 @@
 <!--                    DTD VERSION/CHANGE HISTORY                 -->
 <!-- ============================================================= -->
 <!--
-Version  Reason/Occasion                    (who)        m.m.p (yymmdd)  
+Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 57       Reboot of ScML versioning to       dcorrigan    2.0.0  140401
          follow strict semantic rules       cchimi
          as defined by http://semver.org/
@@ -39,14 +39,15 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
             (language variants: l-)
           - added "alt" attr to
             bk, ut, pt, ct
-60       corrected use of IDREF attr       dcorrigan     2.1.1  150322 
+60       corrected use of IDREF attr       dcorrigan     2.1.1  150322
 61       added term, level1, etc. attrs    dcorrigan     2.1.2  150810
          for idx as index term metadata
 62       2016 major tag update:            dcorrigan     2.2.0  160401
           - expanded idx indexing attrs
           - added 18 para styles
           - added 11 char styles
- 
+63       add @idref to tnref               dcorrigan     2.2.1  160401
+
 -->
 
 <!-- ============================================================ -->
@@ -396,8 +397,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | ntnl1l
   | ntnl1s
   | ntnlf
-  | ntnls
   | ntnll
+  | ntnls
   | ntsl
   | ntsl1
   | ntsl1f
@@ -484,8 +485,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | rpvl
   | rpy
   | rv
-  | rvf
   | rvd
+  | rvf
   | rvh
   | rvt
   | sb
@@ -582,8 +583,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | sbulp
   | sbuls
   | sec
-  | secbot
-  | sectop
   | ser
   | ser1
   | ser2
@@ -592,8 +591,8 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | serahaft
   | serau
   | serbh
-  | serf
   | sered
+  | serf
   | serp
   | serpf
   | sers
@@ -679,10 +678,10 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | tocf
   | tocfm
   | tocfmf
-  | tocpt
-  | tocut
   | tocill
   | tocill1
+  | tocpt
+  | tocut
   | ul
   | ul1
   | ul1f
@@ -778,9 +777,9 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   | dispk-i
   | dropcap
   | dropcap-i
+  | em
   | ennum
   | enref
-  | em
   | eqn
   | exhn
   | fighn
@@ -2664,13 +2663,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT ntnls ( #PCDATA | %character_styles; )* >
-  <!ATTLIST ntnls
+  <!ELEMENT ntnll ( #PCDATA | %character_styles; )* >
+  <!ATTLIST ntnll
     %coreattrs;
   >
 
-  <!ELEMENT ntnll ( #PCDATA | %character_styles; )* >
-  <!ATTLIST ntnll
+  <!ELEMENT ntnls ( #PCDATA | %character_styles; )* >
+  <!ATTLIST ntnls
     %coreattrs;
   >
 
@@ -3105,13 +3104,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT rvf ( #PCDATA | %character_styles; )* >
-  <!ATTLIST rvf
+  <!ELEMENT rvd ( #PCDATA | %character_styles; )* >
+  <!ATTLIST rvd
     %coreattrs;
   >
 
-  <!ELEMENT rvd ( #PCDATA | %character_styles; )* >
-  <!ATTLIST rvd
+  <!ELEMENT rvf ( #PCDATA | %character_styles; )* >
+  <!ATTLIST rvf
     %coreattrs;
   >
 
@@ -3595,16 +3594,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT secbot ( #PCDATA | %character_styles; )* >
-  <!ATTLIST secbot
-    %coreattrs;
-  >
-
-  <!ELEMENT sectop ( #PCDATA | %character_styles; )* >
-  <!ATTLIST sectop
-    %coreattrs;
-  >
-
   <!ELEMENT ser ( #PCDATA | %character_styles; )* >
   <!ATTLIST ser
     %coreattrs;
@@ -3645,13 +3634,13 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT serf ( #PCDATA | %character_styles; )* >
-  <!ATTLIST serf
+  <!ELEMENT sered ( #PCDATA | %character_styles; )* >
+  <!ATTLIST sered
     %coreattrs;
   >
 
-  <!ELEMENT sered ( #PCDATA | %character_styles; )* >
-  <!ATTLIST sered
+  <!ELEMENT serf ( #PCDATA | %character_styles; )* >
+  <!ATTLIST serf
     %coreattrs;
   >
 
@@ -4080,16 +4069,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
-  <!ELEMENT tocpt ( #PCDATA | %character_styles; )* >
-  <!ATTLIST tocpt
-    %coreattrs;
-  >
-
-  <!ELEMENT tocut ( #PCDATA | %character_styles; )* >
-  <!ATTLIST tocut
-    %coreattrs;
-  >
-
   <!ELEMENT tocill ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocill
     %coreattrs;
@@ -4097,6 +4076,16 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
 
   <!ELEMENT tocill1 ( #PCDATA | %character_styles; )* >
   <!ATTLIST tocill1
+    %coreattrs;
+  >
+
+  <!ELEMENT tocpt ( #PCDATA | %character_styles; )* >
+  <!ATTLIST tocpt
+    %coreattrs;
+  >
+
+  <!ELEMENT tocut ( #PCDATA | %character_styles; )* >
+  <!ATTLIST tocut
     %coreattrs;
   >
 
@@ -4570,6 +4559,11 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
     %coreattrs;
   >
 
+  <!ELEMENT em ( #PCDATA | %character_styles; )* >
+  <!ATTLIST em
+    %coreattrs;
+  >
+
   <!ELEMENT ennum ( #PCDATA | %character_styles; )* >
   <!ATTLIST ennum
     %coreattrs;
@@ -4579,11 +4573,6 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ATTLIST enref
     %coreattrs;
     idref  IDREF  #IMPLIED
-  >
-
-  <!ELEMENT em ( #PCDATA | %character_styles; )* >
-  <!ATTLIST em
-    %coreattrs;
   >
 
   <!ELEMENT eqn ( #PCDATA | %character_styles; )* >
@@ -5285,6 +5274,7 @@ Version  Reason/Occasion                    (who)        m.m.p (yymmdd)
   <!ELEMENT tnref ( #PCDATA | %character_styles; )* >
   <!ATTLIST tnref
     %coreattrs;
+    idref  IDREF  #IMPLIED
   >
 
   <!ELEMENT tnw ( #PCDATA | %character_styles; )* >
